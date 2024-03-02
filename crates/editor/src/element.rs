@@ -328,9 +328,9 @@ impl EditorElement {
                 cx.propagate();
             }
         });
-        register_action(view, cx, Editor::next_copilot_suggestion);
-        register_action(view, cx, Editor::previous_copilot_suggestion);
-        register_action(view, cx, Editor::copilot_suggest);
+        //register_action(view, cx, Editor::next_copilot_suggestion);
+        //register_action(view, cx, Editor::previous_copilot_suggestion);
+        //register_action(view, cx, Editor::copilot_suggest);
         register_action(view, cx, Editor::context_menu_first);
         register_action(view, cx, Editor::context_menu_prev);
         register_action(view, cx, Editor::context_menu_next);
