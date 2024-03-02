@@ -59,7 +59,7 @@ impl Inlay {
             text: text.into(),
         }
     }
-
+    #[allow(dead_code)]
     pub fn suggestion<T: Into<Rope>>(id: usize, position: Anchor, text: T) -> Self {
         Self {
             id: InlayId::Suggestion(id),

@@ -204,6 +204,7 @@ pub fn render_parsed_markdown(
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub(crate) enum InlayId {
+    #[allow(dead_code)]
     Suggestion(usize),
     Hint(usize),
 }
