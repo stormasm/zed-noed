@@ -3,8 +3,8 @@ mod only_instance;
 mod open_listener;
 
 pub use app_menus::*;
-use assistant::AssistantPanel;
-use breadcrumbs::Breadcrumbs;
+//use assistant::AssistantPanel;
+//use breadcrumbs::Breadcrumbs;
 use collections::VecDeque;
 use editor::{Editor, MultiBuffer};
 use gpui::{
@@ -19,7 +19,7 @@ use assets::Assets;
 use futures::{channel::mpsc, select_biased, StreamExt};
 use project::TaskSourceKind;
 use project_panel::ProjectPanel;
-use quick_action_bar::QuickActionBar;
+//use quick_action_bar::QuickActionBar;
 use release_channel::{AppCommitSha, ReleaseChannel};
 use rope::Rope;
 use search::project_search::ProjectSearchBar;
