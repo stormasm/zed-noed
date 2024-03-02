@@ -185,6 +185,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
         cx.spawn(|workspace_handle, mut cx| async move {
             let project_panel = ProjectPanel::load(workspace_handle.clone(), cx.clone());
             let terminal_panel = TerminalPanel::load(workspace_handle.clone(), cx.clone());
+            /*
             let assistant_panel = AssistantPanel::load(workspace_handle.clone(), cx.clone());
             let channels_panel =
                 collab_ui::collab_panel::CollabPanel::load(workspace_handle.clone(), cx.clone());
@@ -194,20 +195,21 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
                 workspace_handle.clone(),
                 cx.clone(),
             );
+            */
             let (
                 project_panel,
                 terminal_panel,
-                assistant_panel,
-                channels_panel,
-                chat_panel,
-                notification_panel,
+                //assistant_panel,
+                //channels_panel,
+                //chat_panel,
+                //notification_panel,
             ) = futures::try_join!(
                 project_panel,
                 terminal_panel,
-                assistant_panel,
-                channels_panel,
-                chat_panel,
-                notification_panel,
+                //assistant_panel,
+                //channels_panel,
+                //chat_panel,
+                //notification_panel,
             )?;
 
             workspace_handle.update(&mut cx, |workspace, cx| {
