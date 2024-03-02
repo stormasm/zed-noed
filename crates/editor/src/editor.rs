@@ -9289,30 +9289,30 @@ impl Editor {
             })
             .collect()
     }
+    /*
+        fn report_copilot_event(
+            &self,
+            suggestion_id: Option<String>,
+            suggestion_accepted: bool,
+            cx: &AppContext,
+        ) {
+            let Some(project) = &self.project else { return };
 
-    fn report_copilot_event(
-        &self,
-        suggestion_id: Option<String>,
-        suggestion_accepted: bool,
-        cx: &AppContext,
-    ) {
-        let Some(project) = &self.project else { return };
+            // If None, we are either getting suggestions in a new, unsaved file, or in a file without an extension
+            let file_extension = self
+                .buffer
+                .read(cx)
+                .as_singleton()
+                .and_then(|b| b.read(cx).file())
+                .and_then(|file| Path::new(file.file_name(cx)).extension())
+                .and_then(|e| e.to_str())
+                .map(|a| a.to_string());
 
-        // If None, we are either getting suggestions in a new, unsaved file, or in a file without an extension
-        let file_extension = self
-            .buffer
-            .read(cx)
-            .as_singleton()
-            .and_then(|b| b.read(cx).file())
-            .and_then(|file| Path::new(file.file_name(cx)).extension())
-            .and_then(|e| e.to_str())
-            .map(|a| a.to_string());
+            let telemetry = project.read(cx).client().telemetry().clone();
 
-        let telemetry = project.read(cx).client().telemetry().clone();
-
-        telemetry.report_copilot_event(suggestion_id, suggestion_accepted, file_extension)
-    }
-
+            telemetry.report_copilot_event(suggestion_id, suggestion_accepted, file_extension)
+        }
+    */
     #[cfg(any(test, feature = "test-support"))]
     fn report_editor_event(
         &self,
