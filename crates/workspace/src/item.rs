@@ -27,10 +27,7 @@ use std::{
     ops::Range,
     path::PathBuf,
     rc::Rc,
-    sync::{
-        atomic::{AtomicBool, Ordering},
-        Arc,
-    },
+    sync::{atomic::AtomicBool, Arc},
     time::Duration,
 };
 use theme::Theme;
@@ -398,30 +395,30 @@ impl<T: Item> ItemHandle for View<T> {
             this.set_nav_history(history, cx);
             this.added_to_workspace(workspace, cx);
         });
-
-        if let Some(followed_item) = self.to_followable_item_handle(cx) {
-            if let Some(message) = followed_item.to_state_proto(cx) {
-                workspace.update_followers(
-                    followed_item.is_project_item(cx),
-                    proto::update_followers::Variant::CreateView(proto::View {
-                        id: followed_item
-                            .remote_id(&workspace.app_state.client, cx)
-                            .map(|id| id.to_proto()),
-                        variant: Some(message),
-                        leader_id: workspace.leader_for_pane(&pane),
-                    }),
-                    cx,
-                );
-            }
-        }
-
+        /*
+                if let Some(followed_item) = self.to_followable_item_handle(cx) {
+                    if let Some(message) = followed_item.to_state_proto(cx) {
+                        workspace.update_followers(
+                            followed_item.is_project_item(cx),
+                            proto::update_followers::Variant::CreateView(proto::View {
+                                id: followed_item
+                                    .remote_id(&workspace.app_state.client, cx)
+                                    .map(|id| id.to_proto()),
+                                variant: Some(message),
+                                leader_id: workspace.leader_for_pane(&pane),
+                            }),
+                            cx,
+                        );
+                    }
+                }
+        */
         if workspace
             .panes_by_item
             .insert(self.item_id(), pane.downgrade())
             .is_none()
         {
             let mut pending_autosave = DelayedDebouncedEditAction::new();
-            let pending_update = Rc::new(RefCell::new(None));
+            let pending_update = Rc::new(RefCell::new(None::<T>));
             let pending_update_scheduled = Arc::new(AtomicBool::new(false));
 
             let mut event_subscription =
@@ -436,50 +433,50 @@ impl<T: Item> ItemHandle for View<T> {
                         log::error!("unexpected item event after pane was dropped");
                         return;
                     };
+                    /*
+                                        if let Some(item) = item.to_followable_item_handle(cx) {
+                                            let is_project_item = item.is_project_item(cx);
+                                            let leader_id = workspace.leader_for_pane(&pane);
 
-                    if let Some(item) = item.to_followable_item_handle(cx) {
-                        let is_project_item = item.is_project_item(cx);
-                        let leader_id = workspace.leader_for_pane(&pane);
+                                            let follow_event = item.to_follow_event(event);
+                                            if leader_id.is_some()
+                                                && matches!(follow_event, Some(FollowEvent::Unfollow))
+                                            {
+                                                workspace.unfollow(&pane, cx);
+                                            }
 
-                        let follow_event = item.to_follow_event(event);
-                        if leader_id.is_some()
-                            && matches!(follow_event, Some(FollowEvent::Unfollow))
-                        {
-                            workspace.unfollow(&pane, cx);
-                        }
-
-                        if item.focus_handle(cx).contains_focused(cx)
-                            && item.add_event_to_update_proto(
-                                event,
-                                &mut *pending_update.borrow_mut(),
-                                cx,
-                            )
-                            && !pending_update_scheduled.load(Ordering::SeqCst)
-                        {
-                            pending_update_scheduled.store(true, Ordering::SeqCst);
-                            cx.defer({
-                                let pending_update = pending_update.clone();
-                                let pending_update_scheduled = pending_update_scheduled.clone();
-                                move |this, cx| {
-                                    pending_update_scheduled.store(false, Ordering::SeqCst);
-                                    this.update_followers(
-                                        is_project_item,
-                                        proto::update_followers::Variant::UpdateView(
-                                            proto::UpdateView {
-                                                id: item
-                                                    .remote_id(&this.app_state.client, cx)
-                                                    .map(|id| id.to_proto()),
-                                                variant: pending_update.borrow_mut().take(),
-                                                leader_id,
-                                            },
-                                        ),
-                                        cx,
-                                    );
-                                }
-                            });
-                        }
-                    }
-
+                                            if item.focus_handle(cx).contains_focused(cx)
+                                                && item.add_event_to_update_proto(
+                                                    event,
+                                                    &mut *pending_update.borrow_mut(),
+                                                    cx,
+                                                )
+                                                && !pending_update_scheduled.load(Ordering::SeqCst)
+                                            {
+                                                pending_update_scheduled.store(true, Ordering::SeqCst);
+                                                cx.defer({
+                                                    let pending_update = pending_update.clone();
+                                                    let pending_update_scheduled = pending_update_scheduled.clone();
+                                                    move |this, cx| {
+                                                        pending_update_scheduled.store(false, Ordering::SeqCst);
+                                                        this.update_followers(
+                                                            is_project_item,
+                                                            proto::update_followers::Variant::UpdateView(
+                                                                proto::UpdateView {
+                                                                    id: item
+                                                                        .remote_id(&this.app_state.client, cx)
+                                                                        .map(|id| id.to_proto()),
+                                                                    variant: pending_update.borrow_mut().take(),
+                                                                    leader_id,
+                                                                },
+                                                            ),
+                                                            cx,
+                                                        );
+                                                    }
+                                                });
+                                            }
+                                        }
+                    */
                     T::to_item_events(event, |event| match event {
                         ItemEvent::CloseItem => {
                             pane.update(cx, |pane, cx| {
