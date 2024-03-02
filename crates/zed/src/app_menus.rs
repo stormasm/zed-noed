@@ -8,7 +8,7 @@ pub fn app_menus() -> Vec<Menu<'static>> {
             name: "Zed",
             items: vec![
                 MenuItem::action("About Zed…", super::About),
-                MenuItem::action("Check for Updates", auto_update::Check),
+                //MenuItem::action("Check for Updates", auto_update::Check),
                 MenuItem::separator(),
                 MenuItem::submenu(Menu {
                     name: "Preferences",
