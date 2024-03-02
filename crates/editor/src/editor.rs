@@ -111,7 +111,7 @@ use std::{
 };
 pub use sum_tree::Bias;
 use sum_tree::TreeMap;
-use text::{BufferId, OffsetUtf16, Rope};
+use text::{BufferId, OffsetUtf16};
 use theme::{
     observe_buffer_font_size_adjustment, ActiveTheme, PlayerColor, StatusColors, SyntaxTheme,
     ThemeColors, ThemeSettings,
@@ -130,7 +130,7 @@ const CURSOR_BLINK_INTERVAL: Duration = Duration::from_millis(500);
 const MAX_LINE_LEN: usize = 1024;
 const MIN_NAVIGATION_HISTORY_ROW_DELTA: i64 = 10;
 const MAX_SELECTION_HISTORY_LEN: usize = 1024;
-const COPILOT_DEBOUNCE_TIMEOUT: Duration = Duration::from_millis(75);
+//const COPILOT_DEBOUNCE_TIMEOUT: Duration = Duration::from_millis(75);
 pub(crate) const CURSORS_VISIBLE_FOR: Duration = Duration::from_millis(2000);
 #[doc(hidden)]
 pub const CODE_ACTIONS_DEBOUNCE_TIMEOUT: Duration = Duration::from_millis(250);
