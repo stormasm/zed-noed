@@ -14,7 +14,7 @@ use async_trait::async_trait;
 use client::{proto, Client, Collaborator, TypedEnvelope, UserStore};
 use clock::ReplicaId;
 use collections::{hash_map, BTreeMap, HashMap, HashSet, VecDeque};
-use copilot::Copilot;
+//use copilot::Copilot;
 use debounced_delay::DebouncedDelay;
 use futures::{
     channel::mpsc::{self, UnboundedReceiver},
@@ -159,8 +159,8 @@ pub struct Project {
     _maintain_buffer_languages: Task<()>,
     _maintain_workspace_config: Task<Result<()>>,
     terminals: Terminals,
-    copilot_lsp_subscription: Option<gpui::Subscription>,
-    copilot_log_subscription: Option<lsp::Subscription>,
+    //copilot_lsp_subscription: Option<gpui::Subscription>,
+    //copilot_log_subscription: Option<lsp::Subscription>,
     current_lsp_settings: HashMap<Arc<str>, LspSettings>,
     node: Option<Arc<dyn NodeRuntime>>,
     default_prettier: DefaultPrettier,
@@ -550,8 +550,8 @@ impl Project {
             let (tx, rx) = mpsc::unbounded();
             cx.spawn(move |this, cx| Self::send_buffer_ordered_messages(this, rx, cx))
                 .detach();
-            let copilot_lsp_subscription =
-                Copilot::global(cx).map(|copilot| subscribe_for_copilot_events(&copilot, cx));
+            //let copilot_lsp_subscription =
+            //    Copilot::global(cx).map(|copilot| subscribe_for_copilot_events(&copilot, cx));
             let tasks = Inventory::new(cx);
 
             Self {
@@ -597,8 +597,8 @@ impl Project {
                 terminals: Terminals {
                     local_handles: Vec::new(),
                 },
-                copilot_lsp_subscription,
-                copilot_log_subscription: None,
+                //copilot_lsp_subscription,
+                //copilot_log_subscription: None,
                 current_lsp_settings: ProjectSettings::get_global(cx).lsp.clone(),
                 node: Some(node),
                 default_prettier: DefaultPrettier::default(),
@@ -642,8 +642,8 @@ impl Project {
             let (tx, rx) = mpsc::unbounded();
             cx.spawn(move |this, cx| Self::send_buffer_ordered_messages(this, rx, cx))
                 .detach();
-            let copilot_lsp_subscription =
-                Copilot::global(cx).map(|copilot| subscribe_for_copilot_events(&copilot, cx));
+            //let copilot_lsp_subscription =
+            //  Copilot::global(cx).map(|copilot| subscribe_for_copilot_events(&copilot, cx));
             let mut this = Self {
                 worktrees: Vec::new(),
                 buffer_ordered_messages_tx: tx,
@@ -706,8 +706,8 @@ impl Project {
                 terminals: Terminals {
                     local_handles: Vec::new(),
                 },
-                copilot_lsp_subscription,
-                copilot_log_subscription: None,
+                //copilot_lsp_subscription,
+                //copilot_log_subscription: None,
                 current_lsp_settings: ProjectSettings::get_global(cx).lsp.clone(),
                 node: None,
                 default_prettier: DefaultPrettier::default(),
@@ -916,18 +916,18 @@ impl Project {
         for (worktree, language) in language_servers_to_restart {
             self.restart_language_servers(worktree, language, cx);
         }
-
-        if self.copilot_lsp_subscription.is_none() {
-            if let Some(copilot) = Copilot::global(cx) {
-                for buffer in self.opened_buffers.values() {
-                    if let Some(buffer) = buffer.upgrade() {
-                        self.register_buffer_with_copilot(&buffer, cx);
+        /*
+                if self.copilot_lsp_subscription.is_none() {
+                    if let Some(copilot) = Copilot::global(cx) {
+                        for buffer in self.opened_buffers.values() {
+                            if let Some(buffer) = buffer.upgrade() {
+                                self.register_buffer_with_copilot(&buffer, cx);
+                            }
+                        }
+                        self.copilot_lsp_subscription = Some(subscribe_for_copilot_events(&copilot, cx));
                     }
                 }
-                self.copilot_lsp_subscription = Some(subscribe_for_copilot_events(&copilot, cx));
-            }
-        }
-
+        */
         cx.notify();
     }
 
@@ -2000,7 +2000,7 @@ impl Project {
 
         self.detect_language_for_buffer(buffer, cx);
         self.register_buffer_with_language_servers(buffer, cx);
-        self.register_buffer_with_copilot(buffer, cx);
+        //self.register_buffer_with_copilot(buffer, cx);
         cx.observe_release(buffer, |this, buffer, cx| {
             if let Some(file) = File::from_dyn(buffer.file()) {
                 if file.is_local() {
@@ -2145,6 +2145,7 @@ impl Project {
         });
     }
 
+    /*
     fn register_buffer_with_copilot(
         &self,
         buffer_handle: &Model<Buffer>,
@@ -2154,6 +2155,7 @@ impl Project {
             copilot.update(cx, |copilot, cx| copilot.register_buffer(buffer_handle, cx));
         }
     }
+    */
 
     async fn send_buffer_ordered_messages(
         this: WeakModel<Self>,
@@ -9114,7 +9116,7 @@ impl Project {
         }
     }
 }
-
+/*
 fn subscribe_for_copilot_events(
     copilot: &Model<Copilot>,
     cx: &mut ModelContext<'_, Project>,
@@ -9151,7 +9153,7 @@ fn subscribe_for_copilot_events(
         },
     )
 }
-
+*/
 fn glob_literal_prefix<'a>(glob: &'a str) -> &'a str {
     let mut literal_end = 0;
     for (i, part) in glob.split(path::MAIN_SEPARATOR).enumerate() {
