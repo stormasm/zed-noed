@@ -418,8 +418,8 @@ impl<T: Item> ItemHandle for View<T> {
             .is_none()
         {
             let mut pending_autosave = DelayedDebouncedEditAction::new();
-            let pending_update = Rc::new(RefCell::new(None::<T>));
-            let pending_update_scheduled = Arc::new(AtomicBool::new(false));
+            let _pending_update = Rc::new(RefCell::new(None::<T>));
+            let _pending_update_scheduled = Arc::new(AtomicBool::new(false));
 
             let mut event_subscription =
                 Some(cx.subscribe(self, move |workspace, item, event, cx| {
