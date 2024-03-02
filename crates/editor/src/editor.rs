@@ -414,7 +414,7 @@ pub struct Editor {
     hover_state: HoverState,
     gutter_hovered: bool,
     hovered_link_state: Option<HoveredLinkState>,
-    copilot_state: CopilotState,
+    //copilot_state: CopilotState,
     inlay_hint_cache: InlayHintCache,
     next_inlay_id: usize,
     _subscriptions: Vec<Subscription>,
@@ -1212,7 +1212,7 @@ impl CodeActionsMenu {
         (cursor_position, element)
     }
 }
-
+/*
 pub(crate) struct CopilotState {
     excerpt_id: Option<ExcerptId>,
     pending_refresh: Task<Option<()>>,
@@ -1321,7 +1321,7 @@ impl CopilotState {
             .sum()
     }
 }
-
+*/
 #[derive(Debug)]
 struct ActiveDiagnosticGroup {
     primary_range: Range<Anchor>,
@@ -1542,7 +1542,7 @@ impl Editor {
             remote_id: None,
             hover_state: Default::default(),
             hovered_link_state: Default::default(),
-            copilot_state: Default::default(),
+            //copilot_state: Default::default(),
             inlay_hint_cache: InlayHintCache::new(inlay_hint_settings),
             gutter_hovered: false,
             pixel_position_of_newest_cursor: None,
@@ -1942,7 +1942,7 @@ impl Editor {
             self.refresh_code_actions(cx);
             self.refresh_document_highlights(cx);
             refresh_matching_bracket_highlights(self, cx);
-            self.discard_copilot_suggestion(cx);
+            //self.discard_copilot_suggestion(cx);
         }
 
         self.blink_manager.update(cx, BlinkManager::pause_blinking);
@@ -2367,11 +2367,11 @@ impl Editor {
         if self.hide_context_menu(cx).is_some() {
             return true;
         }
-
-        if self.discard_copilot_suggestion(cx) {
-            return true;
-        }
-
+        /*
+                if self.discard_copilot_suggestion(cx) {
+                    return true;
+                }
+        */
         if self.snippet_stack.pop().is_some() {
             return true;
         }
@@ -2560,7 +2560,7 @@ impl Editor {
             }
 
             drop(snapshot);
-            let had_active_copilot_suggestion = this.has_active_copilot_suggestion(cx);
+            //let had_active_copilot_suggestion = this.has_active_copilot_suggestion(cx);
             this.change_selections(Some(Autoscroll::fit()), cx, |s| s.select(new_selections));
 
             if brace_inserted {
@@ -2576,6 +2576,9 @@ impl Editor {
                 }
             }
 
+            this.trigger_completion_on_input(&text, cx);
+
+            /*
             if had_active_copilot_suggestion {
                 this.refresh_copilot_suggestions(true, cx);
                 if !this.has_active_copilot_suggestion(cx) {
@@ -2585,6 +2588,7 @@ impl Editor {
                 this.trigger_completion_on_input(&text, cx);
                 this.refresh_copilot_suggestions(true, cx);
             }
+            */
         });
     }
 
@@ -2722,7 +2726,7 @@ impl Editor {
                 .collect();
 
             this.change_selections(Some(Autoscroll::fit()), cx, |s| s.select(new_selections));
-            this.refresh_copilot_suggestions(true, cx);
+            //this.refresh_copilot_suggestions(true, cx);
         });
     }
 
@@ -3109,9 +3113,11 @@ impl Editor {
         self.display_map
             .read(cx)
             .current_inlays()
+            /*
             .filter(move |inlay| {
                 Some(inlay.id) != self.copilot_state.suggestion.as_ref().map(|h| h.id)
             })
+            */
             .cloned()
             .collect()
     }
@@ -3345,16 +3351,18 @@ impl Editor {
                         let menu = menu.unwrap();
                         *context_menu = Some(ContextMenu::Completions(menu));
                         drop(context_menu);
-                        this.discard_copilot_suggestion(cx);
+                        //this.discard_copilot_suggestion(cx);
                         cx.notify();
                     } else if this.completion_tasks.len() <= 1 {
                         // If there are no more completion tasks and the last menu was
                         // empty, we should hide it. If it was already hidden, we should
                         // also show the copilot suggestion when available.
                         drop(context_menu);
+                        /*
                         if this.hide_context_menu(cx).is_none() {
-                            this.update_visible_copilot_suggestion(cx);
+                            //this.update_visible_copilot_suggestion(cx);
                         }
+                        */
                     }
                 })?;
 
@@ -3479,7 +3487,7 @@ impl Editor {
                 });
             }
 
-            this.refresh_copilot_suggestions(true, cx);
+            //this.refresh_copilot_suggestions(true, cx);
         });
 
         let provider = self.completion_provider.as_ref()?;
@@ -3516,7 +3524,7 @@ impl Editor {
                 if this.focus_handle.is_focused(cx) {
                     if let Some((buffer, actions)) = this.available_code_actions.clone() {
                         this.completion_tasks.clear();
-                        this.discard_copilot_suggestion(cx);
+                        //this.discard_copilot_suggestion(cx);
                         *this.context_menu.write() =
                             Some(ContextMenu::CodeActions(CodeActionsMenu {
                                 buffer,
@@ -4162,9 +4170,11 @@ impl Editor {
         cx.notify();
         self.completion_tasks.clear();
         let context_menu = self.context_menu.write().take();
+        /*
         if context_menu.is_some() {
-            self.update_visible_copilot_suggestion(cx);
+            //self.update_visible_copilot_suggestion(cx);
         }
+        */
         context_menu
     }
 
@@ -4356,7 +4366,7 @@ impl Editor {
 
             this.change_selections(Some(Autoscroll::fit()), cx, |s| s.select(selections));
             this.insert("", cx);
-            this.refresh_copilot_suggestions(true, cx);
+            //this.refresh_copilot_suggestions(true, cx);
         });
     }
 
@@ -4374,7 +4384,7 @@ impl Editor {
                 })
             });
             this.insert("", cx);
-            this.refresh_copilot_suggestions(true, cx);
+            //this.refresh_copilot_suggestions(true, cx);
         });
     }
 
@@ -4438,13 +4448,15 @@ impl Editor {
 
             // Accept copilot suggestion if there is only one selection and the cursor is not
             // in the leading whitespace.
+            /*
             if self.selections.count() == 1
                 && cursor.column >= current_indent.len
                 && self.has_active_copilot_suggestion(cx)
             {
-                self.accept_copilot_suggestion(cx);
+                //self.accept_copilot_suggestion(cx);
                 return;
             }
+            */
 
             // Otherwise, insert a hard or soft tab.
             let settings = buffer.settings_at(cursor, cx);
@@ -4469,7 +4481,7 @@ impl Editor {
         self.transact(cx, |this, cx| {
             this.buffer.update(cx, |b, cx| b.edit(edits, None, cx));
             this.change_selections(Some(Autoscroll::fit()), cx, |s| s.select(selections));
-            this.refresh_copilot_suggestions(true, cx);
+            //this.refresh_copilot_suggestions(true, cx);
         });
     }
 
@@ -5458,7 +5470,7 @@ impl Editor {
             }
             self.request_autoscroll(Autoscroll::fit(), cx);
             self.unmark_text(cx);
-            self.refresh_copilot_suggestions(true, cx);
+            //self.refresh_copilot_suggestions(true, cx);
             cx.emit(EditorEvent::Edited);
         }
     }
@@ -5477,7 +5489,7 @@ impl Editor {
             }
             self.request_autoscroll(Autoscroll::fit(), cx);
             self.unmark_text(cx);
-            self.refresh_copilot_suggestions(true, cx);
+            //self.refresh_copilot_suggestions(true, cx);
             cx.emit(EditorEvent::Edited);
         }
     }
@@ -9029,9 +9041,11 @@ impl Editor {
             } => {
                 self.refresh_active_diagnostics(cx);
                 self.refresh_code_actions(cx);
+                /*
                 if self.has_active_copilot_suggestion(cx) {
                     self.update_visible_copilot_suggestion(cx);
                 }
+                */
                 cx.emit(EditorEvent::BufferEdited);
                 cx.emit(SearchEvent::MatchesInvalidated);
 
@@ -9108,7 +9122,7 @@ impl Editor {
     }
 
     fn settings_changed(&mut self, cx: &mut ViewContext<Self>) {
-        self.refresh_copilot_suggestions(true, cx);
+        //self.refresh_copilot_suggestions(true, cx);
         self.refresh_inlay_hints(
             InlayHintRefreshReason::SettingsChange(inlay_hint_settings(
                 self.selections.newest_anchor().head(),
