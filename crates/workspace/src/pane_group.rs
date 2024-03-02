@@ -1,6 +1,6 @@
 use crate::{pane_group::element::pane_axis, AppState, FollowerState, Pane, Workspace};
 use anyhow::{anyhow, Result};
-use call::{ActiveCall, ParticipantLocation};
+//use call::{ActiveCall, ParticipantLocation};
 use collections::HashMap;
 use gpui::{
     point, size, AnyView, AnyWeakView, Axis, Bounds, IntoElement, Model, MouseButton, Pixels,
@@ -91,8 +91,8 @@ impl PaneGroup {
     pub(crate) fn render(
         &self,
         project: &Model<Project>,
-        follower_states: &HashMap<View<Pane>, FollowerState>,
-        active_call: Option<&Model<ActiveCall>>,
+        //follower_states: &HashMap<View<Pane>, FollowerState>,
+        //active_call: Option<&Model<ActiveCall>>,
         active_pane: &View<Pane>,
         zoomed: Option<&AnyWeakView>,
         app_state: &Arc<AppState>,
@@ -101,8 +101,8 @@ impl PaneGroup {
         self.root.render(
             project,
             0,
-            follower_states,
-            active_call,
+            //follower_states,
+            //active_call,
             active_pane,
             zoomed,
             app_state,
@@ -163,8 +163,8 @@ impl Member {
         &self,
         project: &Model<Project>,
         basis: usize,
-        follower_states: &HashMap<View<Pane>, FollowerState>,
-        active_call: Option<&Model<ActiveCall>>,
+        //follower_states: &HashMap<View<Pane>, FollowerState>,
+        //active_call: Option<&Model<ActiveCall>>,
         active_pane: &View<Pane>,
         zoomed: Option<&AnyWeakView>,
         app_state: &Arc<AppState>,
@@ -176,68 +176,73 @@ impl Member {
                     return div().into_any();
                 }
 
-                let follower_state = follower_states.get(pane);
+                /*
+                                let follower_state = follower_states.get(pane);
 
-                let leader = follower_state.and_then(|state| {
-                    let room = active_call?.read(cx).room()?.read(cx);
-                    room.remote_participant_for_peer_id(state.leader_id)
-                });
+                                let leader = follower_state.and_then(|state| {
+                                    let room = active_call?.read(cx).room()?.read(cx);
+                                    room.remote_participant_for_peer_id(state.leader_id)
+                                });
 
-                let is_in_unshared_view = follower_state.map_or(false, |state| {
-                    state.active_view_id.is_some_and(|view_id| {
-                        !state.items_by_leader_view_id.contains_key(&view_id)
-                    })
-                });
+                                let is_in_unshared_view = follower_state.map_or(false, |state| {
+                                    state.active_view_id.is_some_and(|view_id| {
+                                        !state.items_by_leader_view_id.contains_key(&view_id)
+                                    })
+                                });
+                c
 
-                let mut leader_border = None;
-                let mut leader_status_box = None;
-                let mut leader_join_data = None;
-                if let Some(leader) = &leader {
-                    let mut leader_color = cx
-                        .theme()
-                        .players()
-                        .color_for_participant(leader.participant_index.0)
-                        .cursor;
-                    leader_color.fade_out(0.3);
-                    leader_border = Some(leader_color);
+                                let mut leader_border = None;
+                                let mut leader_status_box = None;
+                                let mut leader_join_data = None;
 
-                    leader_status_box = match leader.location {
-                        ParticipantLocation::SharedProject {
-                            project_id: leader_project_id,
-                        } => {
-                            if Some(leader_project_id) == project.read(cx).remote_id() {
-                                if is_in_unshared_view {
-                                    Some(Label::new(format!(
-                                        "{} is in an unshared pane",
-                                        leader.user.github_login
-                                    )))
-                                } else {
-                                    None
+
+                                if let Some(leader) = &leader {
+                                    let mut leader_color = cx
+                                        .theme()
+                                        .players()
+                                        .color_for_participant(leader.participant_index.0)
+                                        .cursor;
+                                    leader_color.fade_out(0.3);
+                                    leader_border = Some(leader_color);
+
+                                    leader_status_box = match leader.location {
+                                        ParticipantLocation::SharedProject {
+                                            project_id: leader_project_id,
+                                        } => {
+                                            if Some(leader_project_id) == project.read(cx).remote_id() {
+                                                if is_in_unshared_view {
+                                                    Some(Label::new(format!(
+                                                        "{} is in an unshared pane",
+                                                        leader.user.github_login
+                                                    )))
+                                                } else {
+                                                    None
+                                                }
+                                            } else {
+                                                leader_join_data = Some((leader_project_id, leader.user.id));
+                                                Some(Label::new(format!(
+                                                    "Follow {} to their active project",
+                                                    leader.user.github_login,
+                                                )))
+                                            }
+                                        }
+                                        ParticipantLocation::UnsharedProject => Some(Label::new(format!(
+                                            "{} is viewing an unshared Zed project",
+                                            leader.user.github_login
+                                        ))),
+                                        ParticipantLocation::External => Some(Label::new(format!(
+                                            "{} is viewing a window outside of Zed",
+                                            leader.user.github_login
+                                        ))),
+                                    };
                                 }
-                            } else {
-                                leader_join_data = Some((leader_project_id, leader.user.id));
-                                Some(Label::new(format!(
-                                    "Follow {} to their active project",
-                                    leader.user.github_login,
-                                )))
-                            }
-                        }
-                        ParticipantLocation::UnsharedProject => Some(Label::new(format!(
-                            "{} is viewing an unshared Zed project",
-                            leader.user.github_login
-                        ))),
-                        ParticipantLocation::External => Some(Label::new(format!(
-                            "{} is viewing a window outside of Zed",
-                            leader.user.github_login
-                        ))),
-                    };
-                }
-
+                                */
                 div()
                     .relative()
                     .flex_1()
                     .size_full()
                     .child(AnyView::from(pane.clone()).cached())
+                    /*
                     .when_some(leader_border, |this, color| {
                         this.child(
                             div()
@@ -279,14 +284,15 @@ impl Member {
                                 ),
                         )
                     })
+                    */
                     .into_any()
             }
             Member::Axis(axis) => axis
                 .render(
                     project,
                     basis + 1,
-                    follower_states,
-                    active_call,
+                    //follower_states,
+                    //active_call,
                     active_pane,
                     zoomed,
                     app_state,
@@ -475,8 +481,8 @@ impl PaneAxis {
         &self,
         project: &Model<Project>,
         basis: usize,
-        follower_states: &HashMap<View<Pane>, FollowerState>,
-        active_call: Option<&Model<ActiveCall>>,
+        //follower_states: &HashMap<View<Pane>, FollowerState>,
+        //active_call: Option<&Model<ActiveCall>>,
         active_pane: &View<Pane>,
         zoomed: Option<&AnyWeakView>,
         app_state: &Arc<AppState>,
@@ -500,8 +506,8 @@ impl PaneAxis {
                 .render(
                     project,
                     (basis + ix) * 10,
-                    follower_states,
-                    active_call,
+                    //follower_states,
+                    //active_call,
                     active_pane,
                     zoomed,
                     app_state,
