@@ -372,8 +372,8 @@ struct GlobalAppState(Weak<AppState>);
 impl Global for GlobalAppState {}
 
 pub struct WorkspaceStore {
-    workspaces: HashSet<WindowHandle<Workspace>>,
-    client: Arc<Client>,
+    _workspaces: HashSet<WindowHandle<Workspace>>,
+    _client: Arc<Client>,
     _subscriptions: Vec<client::Subscription>,
 }
 
@@ -502,7 +502,7 @@ pub struct Workspace {
     panes_by_item: HashMap<EntityId, WeakView<Pane>>,
     active_pane: View<Pane>,
     last_active_center_pane: Option<WeakView<Pane>>,
-    last_active_view_id: Option<proto::ViewId>,
+    //clast_active_view_id: Option<proto::ViewId>,
     status_bar: View<StatusBar>,
     modal_layer: View<ModalLayer>,
     titlebar_item: Option<AnyView>,
@@ -532,12 +532,14 @@ pub struct ViewId {
     pub id: u64,
 }
 
+/*
 #[derive(Default)]
 struct FollowerState {
     leader_id: PeerId,
     active_view_id: Option<ViewId>,
     items_by_leader_view_id: HashMap<ViewId, Box<dyn FollowableItemHandle>>,
 }
+*/
 
 impl Workspace {
     pub fn new(
@@ -627,7 +629,7 @@ impl Workspace {
         cx.focus_view(&center_pane);
         cx.emit(Event::PaneAdded(center_pane.clone()));
 
-        let window_handle = cx.window_handle().downcast::<Workspace>().unwrap();
+        let _window_handle = cx.window_handle().downcast::<Workspace>().unwrap();
         /*
         app_state.workspace_store.update(cx, |store, _| {
             store.workspaces.insert(window_handle);
@@ -753,7 +755,7 @@ impl Workspace {
             panes_by_item: Default::default(),
             active_pane: center_pane.clone(),
             last_active_center_pane: Some(center_pane.downgrade()),
-            last_active_view_id: None,
+            //clast_active_view_id: None,
             status_bar,
             modal_layer,
             titlebar_item: None,
@@ -1211,14 +1213,14 @@ impl Workspace {
 
     pub fn prepare_to_close(
         &mut self,
-        quitting: bool,
+        _quitting: bool,
         cx: &mut ViewContext<Self>,
     ) -> Task<Result<bool>> {
         //let active_call = self.active_call().cloned();
-        let window = cx.window_handle();
+        let _window = cx.window_handle();
 
         cx.spawn(|this, mut cx| async move {
-            let workspace_count = (*cx).update(|cx| {
+            let _workspace_count = (*cx).update(|cx| {
                 cx.windows()
                     .iter()
                     .filter(|window| window.downcast::<Workspace>().is_some())
@@ -2305,7 +2307,7 @@ impl Workspace {
                 self.split_and_clone(pane, *direction, cx);
             }
             pane::Event::Remove => self.remove_pane(pane, cx),
-            pane::Event::ActivateItem { local } => {
+            pane::Event::ActivateItem { local: _ } => {
                 /*
                 if *local {
                     self.unfollow(&pane, cx);
@@ -4052,7 +4054,7 @@ impl WorkspaceStore {
         })?
     }
 }
-*/
+
 impl ViewId {
     pub(crate) fn from_proto(message: proto::ViewId) -> Result<Self> {
         Ok(Self {
@@ -4070,7 +4072,7 @@ impl ViewId {
         }
     }
 }
-
+*/
 pub trait WorkspaceHandle {
     fn file_project_paths(&self, cx: &AppContext) -> Vec<ProjectPath>;
 }
