@@ -39,7 +39,7 @@ members = [
     "crates/journal",
     "crates/language",
     #  "crates/language_selector",
-    "crates/language_tools",
+    #  "crates/language_tools",
     "crates/languages",
     "crates/live_kit_client",
     "crates/live_kit_server",
@@ -137,7 +137,7 @@ install_cli = { path = "crates/install_cli" }
 journal = { path = "crates/journal" }
 language = { path = "crates/language" }
 #language_selector = { path = "crates/language_selector" }
-language_tools = { path = "crates/language_tools" }
+#language_tools = { path = "crates/language_tools" }
 languages = { path = "crates/languages" }
 live_kit_client = { path = "crates/live_kit_client" }
 live_kit_server = { path = "crates/live_kit_server" }
