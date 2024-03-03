@@ -1133,7 +1133,6 @@ dependencies = [
  "sha2",
  "smol",
  "sysinfo",
- "telemetry_events",
  "tempfile",
  "text",
  "thiserror",
@@ -6355,14 +6354,6 @@ dependencies = [
  "ui",
  "util",
  "workspace",
-]
-
-[[package]]
-name = "telemetry_events"
-version = "0.1.0"
-dependencies = [
- "serde",
- "util",
 ]
 
 [[package]]

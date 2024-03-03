@@ -82,7 +82,7 @@ members = [
     "crates/theme",
     "crates/theme_importer",
     "crates/theme_selector",
-    "crates/telemetry_events",
+    #  "crates/telemetry_events",
     "crates/time_format",
     "crates/ui",
     "crates/util",
@@ -180,7 +180,7 @@ text = { path = "crates/text" }
 theme = { path = "crates/theme" }
 theme_importer = { path = "crates/theme_importer" }
 theme_selector = { path = "crates/theme_selector" }
-telemetry_events = { path = "crates/telemetry_events" }
+#telemetry_events = { path = "crates/telemetry_events" }
 time_format = { path = "crates/time_format" }
 ui = { path = "crates/ui" }
 util = { path = "crates/util" }

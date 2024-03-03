@@ -1,7 +1,7 @@
 mod base_keymap_picker;
 mod base_keymap_setting;
 
-use client::{telemetry::Telemetry, TelemetrySettings};
+//use client::{telemetry::Telemetry, TelemetrySettings};
 use db::kvp::KEY_VALUE_STORE;
 use gpui::{
     svg, AnyElement, AppContext, EventEmitter, FocusHandle, FocusableView, InteractiveElement,
@@ -54,7 +54,7 @@ pub fn show_welcome_view(app_state: &Arc<AppState>, cx: &mut AppContext) {
 pub struct WelcomePage {
     workspace: WeakView<Workspace>,
     focus_handle: FocusHandle,
-    telemetry: Arc<Telemetry>,
+    //telemetry: Arc<Telemetry>,
     _settings_subscription: Subscription,
 }
 
@@ -89,9 +89,9 @@ impl Render for WelcomePage {
                                 Button::new("choose-theme", "Choose a theme")
                                     .full_width()
                                     .on_click(cx.listener(|this, _, cx| {
-                                        this.telemetry.report_app_event(
-                                            "welcome page: change theme".to_string(),
-                                        );
+                                        //this.telemetry.report_app_event(
+                                        //  "welcome page: change theme".to_string(),
+                                        //);
                                         this.workspace
                                             .update(cx, |workspace, cx| {
                                                 theme_selector::toggle(
@@ -107,9 +107,9 @@ impl Render for WelcomePage {
                                 Button::new("choose-keymap", "Choose a keymap")
                                     .full_width()
                                     .on_click(cx.listener(|this, _, cx| {
-                                        this.telemetry.report_app_event(
-                                            "welcome page: change keymap".to_string(),
-                                        );
+                                        //this.telemetry.report_app_event(
+                                        //  "welcome page: change keymap".to_string(),
+                                        //);
                                         this.workspace
                                             .update(cx, |workspace, cx| {
                                                 base_keymap_picker::toggle(
@@ -121,67 +121,6 @@ impl Render for WelcomePage {
                                             .ok();
                                     })),
                             ),
-                    )
-                    .child(
-                        v_flex()
-                            .p_3()
-                            .gap_2()
-                            .bg(cx.theme().colors().elevated_surface_background)
-                            .border_1()
-                            .border_color(cx.theme().colors().border)
-                            .rounded_md()
-                            .child(CheckboxWithLabel::new(
-                                "enable-telemetry",
-                                Label::new("Send anonymous usage data"),
-                                if TelemetrySettings::get_global(cx).metrics {
-                                    ui::Selection::Selected
-                                } else {
-                                    ui::Selection::Unselected
-                                },
-                                cx.listener(move |this, selection, cx| {
-                                    this.telemetry.report_app_event(
-                                        "welcome page: toggle metric telemetry".to_string(),
-                                    );
-                                    this.update_settings::<TelemetrySettings>(selection, cx, {
-                                        let telemetry = this.telemetry.clone();
-
-                                        move |settings, value| {
-                                            settings.metrics = Some(value);
-
-                                            telemetry.report_setting_event(
-                                                "metric telemetry",
-                                                value.to_string(),
-                                            );
-                                        }
-                                    });
-                                }),
-                            ))
-                            .child(CheckboxWithLabel::new(
-                                "enable-crash",
-                                Label::new("Send crash reports"),
-                                if TelemetrySettings::get_global(cx).diagnostics {
-                                    ui::Selection::Selected
-                                } else {
-                                    ui::Selection::Unselected
-                                },
-                                cx.listener(move |this, selection, cx| {
-                                    this.telemetry.report_app_event(
-                                        "welcome page: toggle diagnostic telemetry".to_string(),
-                                    );
-                                    this.update_settings::<TelemetrySettings>(selection, cx, {
-                                        let telemetry = this.telemetry.clone();
-
-                                        move |settings, value| {
-                                            settings.diagnostics = Some(value);
-
-                                            telemetry.report_setting_event(
-                                                "diagnostic telemetry",
-                                                value.to_string(),
-                                            );
-                                        }
-                                    });
-                                }),
-                            )),
                     ),
             )
     }
@@ -190,16 +129,17 @@ impl Render for WelcomePage {
 impl WelcomePage {
     pub fn new(workspace: &Workspace, cx: &mut ViewContext<Workspace>) -> View<Self> {
         let this = cx.new_view(|cx| {
+            /*
             cx.on_release(|this: &mut Self, _, _| {
                 this.telemetry
                     .report_app_event("welcome page: close".to_string());
             })
             .detach();
-
+            */
             WelcomePage {
                 focus_handle: cx.focus_handle(),
                 workspace: workspace.weak_handle(),
-                telemetry: workspace.client().telemetry().clone(),
+                //telemetry: workspace.client().telemetry().clone(),
                 _settings_subscription: cx
                     .observe_global::<SettingsStore>(move |_, cx| cx.notify()),
             }
@@ -267,7 +207,7 @@ impl Item for WelcomePage {
         Some(cx.new_view(|cx| WelcomePage {
             focus_handle: cx.focus_handle(),
             workspace: self.workspace.clone(),
-            telemetry: self.telemetry.clone(),
+            //telemetry: self.telemetry.clone(),
             _settings_subscription: cx.observe_global::<SettingsStore>(move |_, cx| cx.notify()),
         }))
     }

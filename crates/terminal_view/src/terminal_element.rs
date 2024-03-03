@@ -912,13 +912,14 @@ impl InputHandler for TerminalInputHandler {
         self.terminal.update(cx, |terminal, _| {
             terminal.input(text.into());
         });
-
+        /*
         self.workspace
             .update(cx, |this, cx| {
                 let telemetry = this.project().read(cx).client().telemetry().clone();
                 telemetry.log_edit_event("terminal");
             })
             .ok();
+        */
     }
 
     fn replace_and_mark_text_in_range(

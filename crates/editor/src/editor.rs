@@ -9080,8 +9080,8 @@ impl Editor {
                 }
 
                 let Some(project) = &self.project else { return };
-                let telemetry = project.read(cx).client().telemetry().clone();
-                telemetry.log_edit_event("editor");
+                //let telemetry = project.read(cx).client().telemetry().clone();
+                //telemetry.log_edit_event("editor");
             }
             multi_buffer::Event::ExcerptsAdded {
                 buffer,
@@ -9354,15 +9354,16 @@ impl Editor {
             .read(cx)
             .settings_at(0, cx)
             .show_copilot_suggestions;
-
-        let telemetry = project.read(cx).client().telemetry().clone();
-        telemetry.report_editor_event(
-            file_extension,
-            vim_mode,
-            operation,
-            copilot_enabled,
-            copilot_enabled_for_language,
-        )
+        /*
+                let telemetry = project.read(cx).client().telemetry().clone();
+                telemetry.report_editor_event(
+                    file_extension,
+                    vim_mode,
+                    operation,
+                    copilot_enabled,
+                    copilot_enabled_for_language,
+                )
+        */
     }
 
     /// Copy the highlighted chunks to the clipboard as JSON. The format is an array of lines,

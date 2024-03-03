@@ -1,4 +1,4 @@
-use client::telemetry::Telemetry;
+//use client::telemetry::Telemetry;
 use editor::{Editor, EditorElement, EditorStyle};
 use extension::{ExtensionApiResponse, ExtensionStatus, ExtensionStore};
 use gpui::{
@@ -39,7 +39,7 @@ enum ExtensionFilter {
 
 pub struct ExtensionsPage {
     list: UniformListScrollHandle,
-    telemetry: Arc<Telemetry>,
+    //telemetry: Arc<Telemetry>,
     is_fetching_extensions: bool,
     filter: ExtensionFilter,
     extension_entries: Vec<ExtensionApiResponse>,
@@ -64,7 +64,7 @@ impl ExtensionsPage {
 
             let mut this = Self {
                 list: UniformListScrollHandle::new(),
-                telemetry: workspace.client().telemetry().clone(),
+                //telemetry: workspace.client().telemetry().clone(),
                 is_fetching_extensions: false,
                 filter: ExtensionFilter::All,
                 extension_entries: Vec::new(),
@@ -174,8 +174,8 @@ impl ExtensionsPage {
                             let extension_id = extension.id.clone();
                             let version = extension.version.clone();
                             move |this, _, cx| {
-                                this.telemetry
-                                    .report_app_event("extensions: install extension".to_string());
+                                //this.telemetry
+                                //  .report_app_event("extensions: install extension".to_string());
                                 this.install_extension(extension_id.clone(), version.clone(), cx);
                             }
                         }))
@@ -208,8 +208,8 @@ impl ExtensionsPage {
                 let extension_id = extension.id.clone();
                 let version = extension.version.clone();
                 move |this, _, cx| {
-                    this.telemetry
-                        .report_app_event("extensions: install extension".to_string());
+                    //this.telemetry
+                    //  .report_app_event("extensions: install extension".to_string());
                     this.install_extension(extension_id.clone(), version.clone(), cx);
                 }
             }))
@@ -229,8 +229,8 @@ impl ExtensionsPage {
             .on_click(cx.listener({
                 let extension_id = extension.id.clone();
                 move |this, _, cx| {
-                    this.telemetry
-                        .report_app_event("extensions: uninstall extension".to_string());
+                    //this.telemetry
+                    //  .report_app_event("extensions: uninstall extension".to_string());
                     this.uninstall_extension(extension_id.clone(), cx);
                 }
             }))

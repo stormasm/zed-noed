@@ -1,7 +1,7 @@
 #[cfg(any(test, feature = "test-support"))]
 pub mod test;
 
-pub mod telemetry;
+//pub mod telemetry;
 pub mod user;
 
 use anyhow::{anyhow, Context as _, Result};
@@ -39,14 +39,14 @@ use std::{
     sync::{atomic::AtomicU64, Arc, Weak},
     time::{Duration, Instant},
 };
-use telemetry::Telemetry;
+//cuse telemetry::Telemetry;
 use thiserror::Error;
 use url::Url;
 use util::http::{HttpClient, HttpClientWithUrl};
 use util::{ResultExt, TryFutureExt};
 
 pub use rpc::*;
-pub use telemetry_events::Event;
+//pub use telemetry_events::Event;
 pub use user::*;
 
 lazy_static! {
@@ -154,7 +154,7 @@ pub struct Client {
     id: AtomicU64,
     peer: Arc<Peer>,
     http: Arc<HttpClientWithUrl>,
-    telemetry: Arc<Telemetry>,
+    //telemetry: Arc<Telemetry>,
     state: RwLock<ClientState>,
 
     #[allow(clippy::type_complexity)]
@@ -423,14 +423,14 @@ impl settings::Settings for TelemetrySettings {
 
 impl Client {
     pub fn new(
-        clock: Arc<dyn SystemClock>,
+        _clock: Arc<dyn SystemClock>,
         http: Arc<HttpClientWithUrl>,
-        cx: &mut AppContext,
+        _cx: &mut AppContext,
     ) -> Arc<Self> {
         let client = Arc::new(Self {
             id: AtomicU64::new(0),
             peer: Peer::new(0),
-            telemetry: Telemetry::new(clock, http.clone(), cx),
+            //telemetry: Telemetry::new(clock, http.clone(), cx),
             http,
             state: Default::default(),
 
@@ -554,7 +554,7 @@ impl Client {
                 }));
             }
             Status::SignedOut | Status::UpgradeRequired => {
-                self.telemetry.set_authenticated_user_info(None, false);
+                //cself.telemetry.set_authenticated_user_info(None, false);
                 state._reconnect_task.take();
             }
             _ => {}
@@ -1396,10 +1396,11 @@ impl Client {
             self.peer.respond_with_unhandled_message(message).log_err();
         }
     }
-
-    pub fn telemetry(&self) -> &Arc<Telemetry> {
-        &self.telemetry
-    }
+    /*
+        pub fn telemetry(&self) -> &Arc<Telemetry> {
+            &self.telemetry
+        }
+    */
 }
 
 async fn read_credentials_from_keychain(cx: &AsyncAppContext) -> Option<Credentials> {

@@ -1,4 +1,4 @@
-use client::telemetry::Telemetry;
+//use client::telemetry::Telemetry;
 use feature_flags::FeatureFlagAppExt;
 use fs::Fs;
 use fuzzy::{match_strings, StringMatch, StringMatchCandidate};
@@ -29,10 +29,10 @@ pub fn init(cx: &mut AppContext) {
 
 pub fn toggle(workspace: &mut Workspace, _: &Toggle, cx: &mut ViewContext<Workspace>) {
     let fs = workspace.app_state().fs.clone();
-    let telemetry = workspace.client().telemetry().clone();
+    //let telemetry = workspace.client().telemetry().clone();
     workspace.toggle_modal(cx, |cx| {
         ThemeSelector::new(
-            ThemeSelectorDelegate::new(cx.view().downgrade(), fs, telemetry, cx),
+            ThemeSelectorDelegate::new(cx.view().downgrade(), fs, cx),
             cx,
         )
     });
@@ -72,7 +72,7 @@ pub struct ThemeSelectorDelegate {
     original_theme: Arc<Theme>,
     selection_completed: bool,
     selected_index: usize,
-    telemetry: Arc<Telemetry>,
+    //telemetry: Arc<Telemetry>,
     view: WeakView<ThemeSelector>,
 }
 
@@ -80,7 +80,7 @@ impl ThemeSelectorDelegate {
     fn new(
         weak_view: WeakView<ThemeSelector>,
         fs: Arc<dyn Fs>,
-        telemetry: Arc<Telemetry>,
+        //telemetry: Arc<Telemetry>,
         cx: &mut ViewContext<ThemeSelector>,
     ) -> Self {
         let original_theme = cx.theme().clone();
@@ -110,7 +110,7 @@ impl ThemeSelectorDelegate {
             original_theme: original_theme.clone(),
             selected_index: 0,
             selection_completed: false,
-            telemetry,
+            //telemetry,
             view: weak_view,
         };
         this.select_if_matching(&original_theme.name);
@@ -166,8 +166,8 @@ impl PickerDelegate for ThemeSelectorDelegate {
 
         let theme_name = cx.theme().name.clone();
 
-        self.telemetry
-            .report_setting_event("theme", theme_name.to_string());
+        //self.telemetry
+        //  .report_setting_event("theme", theme_name.to_string());
 
         let appearance = Appearance::from(cx.appearance());
 

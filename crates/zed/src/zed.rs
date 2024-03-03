@@ -272,13 +272,6 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
                 );
             })
             .register_action(
-                move |workspace: &mut Workspace,
-                      _: &OpenTelemetryLog,
-                      cx: &mut ViewContext<Workspace>| {
-                    open_telemetry_log_file(workspace, cx);
-                },
-            )
-            .register_action(
                 move |_: &mut Workspace, _: &OpenKeymap, cx: &mut ViewContext<Workspace>| {
                     open_settings_file(&paths::KEYMAP, Rope::default, cx);
                 },
@@ -717,6 +710,7 @@ fn open_local_file(
     }
 }
 
+/*
 fn open_telemetry_log_file(workspace: &mut Workspace, cx: &mut ViewContext<Workspace>) {
     workspace.with_local_workspace(cx, move |workspace, cx| {
         let app_state = workspace.app_state().clone();
@@ -773,7 +767,7 @@ fn open_telemetry_log_file(workspace: &mut Workspace, cx: &mut ViewContext<Works
         .detach();
     }).detach();
 }
-
+*/
 fn open_bundled_file(
     workspace: &mut Workspace,
     text: Cow<'static, str>,
