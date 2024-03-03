@@ -269,171 +269,175 @@ fn main() {
 
         cx.set_menus(app_menus());
         initialize_workspace(app_state.clone(), cx);
+        cx.activate(true);
+    });
+}
 
-        if stdout_is_a_pty() {
-            // todo(linux): unblock this
-            #[cfg(not(target_os = "linux"))]
-            upload_panics_and_crashes(http.clone(), cx);
-            cx.activate(true);
-            let urls = collect_url_args();
-            if !urls.is_empty() {
-                listener.open_urls(&urls)
-            }
-        } else {
-            upload_panics_and_crashes(http.clone(), cx);
-            // TODO Development mode that forces the CLI mode usually runs Zed binary as is instead
-            // of an *app, hence gets no specific callbacks run. Emulate them here, if needed.
-            if std::env::var(FORCE_CLI_MODE_ENV_VAR_NAME).ok().is_some()
-                && !listener.triggered.load(Ordering::Acquire)
-            {
-                listener.open_urls(&collect_url_args())
-            }
-        }
+/*
+if stdout_is_a_pty() {
+    // todo(linux): unblock this
+    #[cfg(not(target_os = "linux"))]
+    upload_panics_and_crashes(http.clone(), cx);
+    cx.activate(true);
+    let urls = collect_url_args();
+    if !urls.is_empty() {
+        listener.open_urls(&urls)
+    }
+} else {
+    upload_panics_and_crashes(http.clone(), cx);
+    // TODO Development mode that forces the CLI mode usually runs Zed binary as is instead
+    // of an *app, hence gets no specific callbacks run. Emulate them here, if needed.
+    if std::env::var(FORCE_CLI_MODE_ENV_VAR_NAME).ok().is_some()
+        && !listener.triggered.load(Ordering::Acquire)
+    {
+        listener.open_urls(&collect_url_args())
+    }
+}
 
-        let triggered_authentication = false;
-        /*
-        fn open_paths_and_log_errs(
-            paths: &[PathBuf],
-            app_state: &Arc<AppState>,
-            cx: &mut AppContext,
-        ) {
-            let task = workspace::open_paths(&paths, &app_state, None, cx);
-            cx.spawn(|_| async move {
-                if let Some((_window, results)) = task.await.log_err() {
-                    for result in results {
-                        if let Some(Err(e)) = result {
-                            log::error!("Error opening path: {}", e);
-                        }
-                    }
+let triggered_authentication = false;
+
+fn open_paths_and_log_errs(
+    paths: &[PathBuf],
+    app_state: &Arc<AppState>,
+    cx: &mut AppContext,
+) {
+    let task = workspace::open_paths(&paths, &app_state, None, cx);
+    cx.spawn(|_| async move {
+        if let Some((_window, results)) = task.await.log_err() {
+            for result in results {
+                if let Some(Err(e)) = result {
+                    log::error!("Error opening path: {}", e);
                 }
-            })
-            .detach();
+            }
+        }
+    })
+    .detach();
+}
+
+        match open_rx.try_next() {
+            Ok(Some(OpenRequest::Paths { paths })) => {
+                open_paths_and_log_errs(&paths, &app_state, cx)
+            }
+            Ok(Some(OpenRequest::CliConnection { connection })) => {
+                let app_state = app_state.clone();
+                cx.spawn(move |cx| handle_cli_connection(connection, app_state, cx))
+                    .detach();
+            }
+            Ok(Some(OpenRequest::JoinChannel { channel_id })) => {
+                triggered_authentication = true;
+                let app_state = app_state.clone();
+                let client = client.clone();
+                cx.spawn(|cx| async move {
+                    // ignore errors here, we'll show a generic "not signed in"
+                    let _ = authenticate(client, &cx).await;
+                    cx.update(|cx| {
+                        workspace::join_channel(client::ChannelId(channel_id), app_state, None, cx)
+                    })?
+                    .await?;
+                    anyhow::Ok(())
+                })
+                .detach_and_log_err(cx);
+            }
+            Ok(Some(OpenRequest::OpenChannelNotes {
+                channel_id,
+                heading,
+            })) => {
+                triggered_authentication = true;
+                let app_state = app_state.clone();
+                let client = client.clone();
+                cx.spawn(|mut cx| async move {
+                    // ignore errors here, we'll show a generic "not signed in"
+                    let _ = authenticate(client, &cx).await;
+                    let workspace_window =
+                        workspace::get_any_active_workspace(app_state, cx.clone()).await?;
+                    let workspace = workspace_window.root_view(&cx)?;
+                    cx.update_window(workspace_window.into(), |_, cx| {
+                        ChannelView::open(client::ChannelId(channel_id), heading, workspace, cx)
+                    })?
+                    .await?;
+                    anyhow::Ok(())
+                })
+                .detach_and_log_err(cx);
+            }
+
+            Ok(None) | Err(_) => cx
+                .spawn({
+                    let app_state = app_state.clone();
+                    |cx| async move { restore_or_create_workspace(&app_state, cx).await }
+                })
+                .detach(),
         }
 
-                match open_rx.try_next() {
-                    Ok(Some(OpenRequest::Paths { paths })) => {
-                        open_paths_and_log_errs(&paths, &app_state, cx)
+        let app_state = app_state.clone();
+
+        cx.spawn(move |cx| async move {
+            while let Some(request) = open_rx.next().await {
+                match request {
+                    OpenRequest::Paths { paths } => {
+                        cx.update(|cx| open_paths_and_log_errs(&paths, &app_state, cx))
+                            .ok();
                     }
-                    Ok(Some(OpenRequest::CliConnection { connection })) => {
+                    OpenRequest::CliConnection { connection } => {
                         let app_state = app_state.clone();
-                        cx.spawn(move |cx| handle_cli_connection(connection, app_state, cx))
-                            .detach();
-                    }
-                    Ok(Some(OpenRequest::JoinChannel { channel_id })) => {
-                        triggered_authentication = true;
-                        let app_state = app_state.clone();
-                        let client = client.clone();
-                        cx.spawn(|cx| async move {
-                            // ignore errors here, we'll show a generic "not signed in"
-                            let _ = authenticate(client, &cx).await;
-                            cx.update(|cx| {
-                                workspace::join_channel(client::ChannelId(channel_id), app_state, None, cx)
-                            })?
-                            .await?;
-                            anyhow::Ok(())
+                        cx.spawn(move |cx| {
+                            handle_cli_connection(connection, app_state.clone(), cx)
                         })
-                        .detach_and_log_err(cx);
+                        .detach();
                     }
-                    Ok(Some(OpenRequest::OpenChannelNotes {
+                    OpenRequest::JoinChannel { channel_id } => {
+                        let app_state = app_state.clone();
+                        cx.update(|mut cx| {
+                            cx.spawn(|cx| async move {
+                                cx.update(|cx| {
+                                    workspace::join_channel(
+                                        client::ChannelId(channel_id),
+                                        app_state,
+                                        None,
+                                        cx,
+                                    )
+                                })?
+                                .await?;
+                                anyhow::Ok(())
+                            })
+                            .detach_and_log_err(&mut cx);
+                        })
+                        .log_err();
+                    }
+                    OpenRequest::OpenChannelNotes {
                         channel_id,
                         heading,
-                    })) => {
-                        triggered_authentication = true;
+                    } => {
                         let app_state = app_state.clone();
-                        let client = client.clone();
-                        cx.spawn(|mut cx| async move {
-                            // ignore errors here, we'll show a generic "not signed in"
-                            let _ = authenticate(client, &cx).await;
+                        let open_notes_task = cx.spawn(|mut cx| async move {
                             let workspace_window =
                                 workspace::get_any_active_workspace(app_state, cx.clone()).await?;
                             let workspace = workspace_window.root_view(&cx)?;
                             cx.update_window(workspace_window.into(), |_, cx| {
-                                ChannelView::open(client::ChannelId(channel_id), heading, workspace, cx)
+                                ChannelView::open(
+                                    client::ChannelId(channel_id),
+                                    heading,
+                                    workspace,
+                                    cx,
+                                )
                             })?
                             .await?;
                             anyhow::Ok(())
-                        })
-                        .detach_and_log_err(cx);
+                        });
+                        cx.update(|cx| open_notes_task.detach_and_log_err(cx))
+                            .log_err();
                     }
-
-                    Ok(None) | Err(_) => cx
-                        .spawn({
-                            let app_state = app_state.clone();
-                            |cx| async move { restore_or_create_workspace(&app_state, cx).await }
-                        })
-                        .detach(),
                 }
+            }
+        })
+        .detach();
 
-                let app_state = app_state.clone();
-
-                cx.spawn(move |cx| async move {
-                    while let Some(request) = open_rx.next().await {
-                        match request {
-                            OpenRequest::Paths { paths } => {
-                                cx.update(|cx| open_paths_and_log_errs(&paths, &app_state, cx))
-                                    .ok();
-                            }
-                            OpenRequest::CliConnection { connection } => {
-                                let app_state = app_state.clone();
-                                cx.spawn(move |cx| {
-                                    handle_cli_connection(connection, app_state.clone(), cx)
-                                })
-                                .detach();
-                            }
-                            OpenRequest::JoinChannel { channel_id } => {
-                                let app_state = app_state.clone();
-                                cx.update(|mut cx| {
-                                    cx.spawn(|cx| async move {
-                                        cx.update(|cx| {
-                                            workspace::join_channel(
-                                                client::ChannelId(channel_id),
-                                                app_state,
-                                                None,
-                                                cx,
-                                            )
-                                        })?
-                                        .await?;
-                                        anyhow::Ok(())
-                                    })
-                                    .detach_and_log_err(&mut cx);
-                                })
-                                .log_err();
-                            }
-                            OpenRequest::OpenChannelNotes {
-                                channel_id,
-                                heading,
-                            } => {
-                                let app_state = app_state.clone();
-                                let open_notes_task = cx.spawn(|mut cx| async move {
-                                    let workspace_window =
-                                        workspace::get_any_active_workspace(app_state, cx.clone()).await?;
-                                    let workspace = workspace_window.root_view(&cx)?;
-                                    cx.update_window(workspace_window.into(), |_, cx| {
-                                        ChannelView::open(
-                                            client::ChannelId(channel_id),
-                                            heading,
-                                            workspace,
-                                            cx,
-                                        )
-                                    })?
-                                    .await?;
-                                    anyhow::Ok(())
-                                });
-                                cx.update(|cx| open_notes_task.detach_and_log_err(cx))
-                                    .log_err();
-                            }
-                        }
-                    }
-                })
-                .detach();
-        */
-        if !triggered_authentication {
-            cx.spawn(|cx| async move { authenticate(client, &cx).await })
-                .detach_and_log_err(cx);
-        }
-    });
+if !triggered_authentication {
+    cx.spawn(|cx| async move { authenticate(client, &cx).await })
+        .detach_and_log_err(cx);
 }
+*/
 
+/*
 async fn authenticate(client: Arc<Client>, cx: &AsyncAppContext) -> Result<()> {
     if stdout_is_a_pty() {
         if client::IMPERSONATE_LOGIN.is_some() {
@@ -444,6 +448,7 @@ async fn authenticate(client: Arc<Client>, cx: &AsyncAppContext) -> Result<()> {
     }
     Ok::<_, anyhow::Error>(())
 }
+*/
 
 async fn installation_id() -> Result<(String, bool)> {
     let legacy_key_name = "device_id".to_string();
@@ -924,10 +929,11 @@ async fn load_login_shell_environment() -> Result<()> {
     Ok(())
 }
 
+
 fn stdout_is_a_pty() -> bool {
     std::env::var(FORCE_CLI_MODE_ENV_VAR_NAME).ok().is_none() && std::io::stdout().is_terminal()
 }
-
+/*
 fn collect_url_args() -> Vec<String> {
     env::args()
         .skip(1)
@@ -944,7 +950,7 @@ fn collect_url_args() -> Vec<String> {
         })
         .collect()
 }
-
+*/
 fn load_embedded_fonts(cx: &AppContext) {
     let asset_source = cx.asset_source();
     let font_paths = asset_source.list("fonts").unwrap();
