@@ -1,6 +1,6 @@
 mod app_menus;
 mod only_instance;
-mod open_listener;
+//mod open_listener;
 
 pub use app_menus::*;
 //use assistant::AssistantPanel;
@@ -12,7 +12,7 @@ use gpui::{
     ViewContext, VisualContext, WindowBounds, WindowKind, WindowOptions,
 };
 pub use only_instance::*;
-pub use open_listener::*;
+//pub use open_listener::*;
 
 use anyhow::Context as _;
 use assets::Assets;
@@ -43,7 +43,7 @@ use workspace::{
     create_and_open_local_file, notifications::simple_message_notification::MessageNotification,
     open_new, AppState, NewFile, NewWindow, Workspace, WorkspaceSettings,
 };
-use zed_actions::{OpenBrowser, OpenSettings, OpenZedUrl, Quit};
+use zed_actions::{OpenBrowser, OpenSettings, Quit};
 
 actions!(
     zed,
@@ -237,9 +237,6 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
             })
             .register_action(|_, _: &ToggleFullScreen, cx| {
                 cx.toggle_full_screen();
-            })
-            .register_action(|_, action: &OpenZedUrl, cx| {
-                OpenListener::global(cx).open_urls(&[action.url.clone()])
             })
             .register_action(|_, action: &OpenBrowser, cx| cx.open_url(&action.url))
             .register_action(move |_, _: &IncreaseBufferFontSize, cx| {

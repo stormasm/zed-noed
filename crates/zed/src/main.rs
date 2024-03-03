@@ -4,7 +4,7 @@
 use anyhow::{anyhow, Context as _, Result};
 use backtrace::Backtrace;
 use chrono::Utc;
-use cli::FORCE_CLI_MODE_ENV_VAR_NAME;
+//use cli::FORCE_CLI_MODE_ENV_VAR_NAME;
 use client::{Client, UserStore};
 //use collab_ui::channel_view::ChannelView;
 use db::kvp::KEY_VALUE_STORE;
@@ -52,7 +52,7 @@ use uuid::Uuid;
 use workspace::AppState;
 use zed::{
     app_menus, build_window_options, ensure_only_instance, handle_keymap_file_changes,
-    initialize_workspace, IsOnlyInstance, OpenListener,
+    initialize_workspace, IsOnlyInstance,
 };
 
 #[global_allocator]
@@ -100,10 +100,12 @@ fn main() {
         })
     };
 
+    /*
     let (listener, mut _open_rx) = OpenListener::new();
     let listener = Arc::new(listener);
     let open_listener = listener.clone();
     app.on_open_urls(move |urls, _| open_listener.open_urls(&urls));
+    */
     app.on_reopen(move |cx| {
         if let Some(app_state) = AppState::try_global(cx)
             .map(|app_state| app_state.upgrade())
@@ -123,7 +125,7 @@ fn main() {
         }
 
         SystemAppearance::init(cx);
-        OpenListener::set_global(listener.clone(), cx);
+        //OpenListener::set_global(listener.clone(), cx);
 
         load_embedded_fonts(cx);
 
@@ -931,7 +933,7 @@ async fn load_login_shell_environment() -> Result<()> {
 }
 
 fn stdout_is_a_pty() -> bool {
-    std::env::var(FORCE_CLI_MODE_ENV_VAR_NAME).ok().is_none() && std::io::stdout().is_terminal()
+    std::io::stdout().is_terminal()
 }
 /*
 fn collect_url_args() -> Vec<String> {
