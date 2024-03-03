@@ -167,13 +167,15 @@ fn main() {
         language::init(cx);
         editor::init(cx);
         diagnostics::init(cx);
+        /*
         copilot::init(
             copilot_language_server_id,
             http.clone(),
             node_runtime.clone(),
             cx,
         );
-        assistant::init(cx);
+        */
+        //assistant::init(cx);
 
         extension::init(
             fs.clone(),
@@ -236,7 +238,7 @@ fn main() {
         AppState::set_global(Arc::downgrade(&app_state), cx);
 
         audio::init(Assets, cx);
-        auto_update::init(http.clone(), cx);
+        //cauto_update::init(http.clone(), cx);
 
         workspace::init(app_state.clone(), cx);
         recent_projects::init(cx);
@@ -257,9 +259,9 @@ fn main() {
         //language_selector::init(cx);
         theme_selector::init(cx);
         //language_tools::init(cx);
-        call::init(app_state.client.clone(), app_state.user_store.clone(), cx);
+        //call::init(app_state.client.clone(), app_state.user_store.clone(), cx);
         notifications::init(app_state.client.clone(), app_state.user_store.clone(), cx);
-        collab_ui::init(&app_state, cx);
+        //collab_ui::init(&app_state, cx);
         feedback::init(cx);
         markdown_preview::init(cx);
         welcome::init(cx);
