@@ -124,9 +124,10 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
         //let copilot = cx.new_view(|cx| copilot_ui::CopilotButton::new(app_state.fs.clone(), cx));
         let diagnostic_summary =
             cx.new_view(|cx| diagnostics::items::DiagnosticIndicator::new(workspace, cx));
+        /*
         let activity_indicator =
             activity_indicator::ActivityIndicator::new(workspace, app_state.languages.clone(), cx);
-        /*
+
         let active_buffer_language =
             cx.new_view(|_| language_selector::ActiveBufferLanguage::new(workspace));
             */
@@ -136,7 +137,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
         let cursor_position = cx.new_view(|_| editor::items::CursorPosition::new());
         workspace.status_bar().update(cx, |status_bar, cx| {
             status_bar.add_left_item(diagnostic_summary, cx);
-            status_bar.add_left_item(activity_indicator, cx);
+            //status_bar.add_left_item(activity_indicator, cx);
             status_bar.add_right_item(feedback_button, cx);
             //status_bar.add_right_item(copilot, cx);
             //status_bar.add_right_item(active_buffer_language, cx);
@@ -333,6 +334,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
                     workspace.toggle_panel_focus::<ProjectPanel>(cx);
                 },
             )
+            /*
             .register_action(
                 |workspace: &mut Workspace,
                  _: &collab_ui::collab_panel::ToggleFocus,
@@ -355,6 +357,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
                         .toggle_panel_focus::<collab_ui::notification_panel::NotificationPanel>(cx);
                 },
             )
+            */
             .register_action(
                 |workspace: &mut Workspace,
                  _: &terminal_panel::ToggleFocus,
@@ -390,7 +393,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
     .detach();
 }
 
-fn initialize_pane(workspace: &mut Workspace, pane: &View<Pane>, cx: &mut ViewContext<Workspace>) {
+fn initialize_pane(_workspace: &mut Workspace, pane: &View<Pane>, cx: &mut ViewContext<Workspace>) {
     pane.update(cx, |pane, cx| {
         pane.toolbar().update(cx, |toolbar, cx| {
             //let breadcrumbs = cx.new_view(|_| Breadcrumbs::new());
