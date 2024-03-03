@@ -3768,89 +3768,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "languages"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-compression",
- "async-tar",
- "async-trait",
- "collections",
- "feature_flags",
- "futures 0.3.30",
- "gpui",
- "language",
- "lazy_static",
- "log",
- "lsp",
- "node_runtime",
- "parking_lot 0.11.2",
- "project",
- "regex",
- "rope",
- "rust-embed",
- "schemars",
- "serde",
- "serde_derive",
- "serde_json",
- "settings",
- "shellexpand",
- "smol",
- "task",
- "text",
- "theme",
- "toml 0.8.10",
- "tree-sitter",
- "tree-sitter-astro",
- "tree-sitter-bash",
- "tree-sitter-c",
- "tree-sitter-c-sharp",
- "tree-sitter-clojure",
- "tree-sitter-cpp",
- "tree-sitter-css",
- "tree-sitter-dart",
- "tree-sitter-dockerfile",
- "tree-sitter-elixir",
- "tree-sitter-elm",
- "tree-sitter-embedded-template",
- "tree-sitter-erlang",
- "tree-sitter-gitcommit",
- "tree-sitter-gleam",
- "tree-sitter-glsl",
- "tree-sitter-go",
- "tree-sitter-gomod",
- "tree-sitter-gowork",
- "tree-sitter-haskell",
- "tree-sitter-hcl",
- "tree-sitter-heex",
- "tree-sitter-html",
- "tree-sitter-json 0.20.0",
- "tree-sitter-lua",
- "tree-sitter-markdown",
- "tree-sitter-nix",
- "tree-sitter-nu",
- "tree-sitter-ocaml",
- "tree-sitter-php",
- "tree-sitter-prisma-io",
- "tree-sitter-proto",
- "tree-sitter-purescript",
- "tree-sitter-python",
- "tree-sitter-racket",
- "tree-sitter-ruby",
- "tree-sitter-rust",
- "tree-sitter-scheme",
- "tree-sitter-svelte",
- "tree-sitter-toml",
- "tree-sitter-typescript",
- "tree-sitter-uiua",
- "tree-sitter-vue",
- "tree-sitter-yaml",
- "tree-sitter-zig",
- "unindent",
- "util",
-]
-
-[[package]]
 name = "lazy_static"
 version = "1.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7561,82 +7478,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-astro"
-version = "0.0.1"
-source = "git+https://github.com/virchau13/tree-sitter-astro.git?rev=e924787e12e8a03194f36a113290ac11d6dc10f3#e924787e12e8a03194f36a113290ac11d6dc10f3"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-bash"
-version = "0.20.4"
-source = "git+https://github.com/tree-sitter/tree-sitter-bash?rev=7331995b19b8f8aba2d5e26deb51d2195c18bc94#7331995b19b8f8aba2d5e26deb51d2195c18bc94"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-c"
-version = "0.20.8"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4bbd5f3d8658c08581f8f2adac6c391c2e9fa00fe9246bf6c5f52213b9cc6b72"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-c-sharp"
-version = "0.20.0"
-source = "git+https://github.com/tree-sitter/tree-sitter-c-sharp?rev=dd5e59721a5f8dae34604060833902b882023aaf#dd5e59721a5f8dae34604060833902b882023aaf"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-clojure"
-version = "0.0.9"
-source = "git+https://github.com/prcastro/tree-sitter-clojure?branch=update-ts#38b4f8d264248b2fd09575fbce66f7c22e8929d5"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
 name = "tree-sitter-cpp"
 version = "0.20.0"
 source = "git+https://github.com/tree-sitter/tree-sitter-cpp?rev=f44509141e7e483323d2ec178f2d2e6c0fc041c1#f44509141e7e483323d2ec178f2d2e6c0fc041c1"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-css"
-version = "0.19.0"
-source = "git+https://github.com/tree-sitter/tree-sitter-css?rev=769203d0f9abe1a9a691ac2b9fe4bb4397a73c51#769203d0f9abe1a9a691ac2b9fe4bb4397a73c51"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-dart"
-version = "0.0.1"
-source = "git+https://github.com/agent3bood/tree-sitter-dart?rev=48934e3bf757a9b78f17bdfaa3e2b4284656fdc7#48934e3bf757a9b78f17bdfaa3e2b4284656fdc7"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-dockerfile"
-version = "0.1.0"
-source = "git+https://github.com/camdencheek/tree-sitter-dockerfile?rev=33e22c33bcdbfc33d42806ee84cfd0b1248cc392#33e22c33bcdbfc33d42806ee84cfd0b1248cc392"
 dependencies = [
  "cc",
  "tree-sitter",
@@ -7652,101 +7496,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-elm"
-version = "5.6.4"
-source = "git+https://github.com/elm-tooling/tree-sitter-elm?rev=692c50c0b961364c40299e73c1306aecb5d20f40#692c50c0b961364c40299e73c1306aecb5d20f40"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
 name = "tree-sitter-embedded-template"
 version = "0.20.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "33817ade928c73a32d4f904a602321e09de9fc24b71d106f3b4b3f8ab30dcc38"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-erlang"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "93ced5145ebb17f83243bf055b74e108da7cc129e12faab4166df03f59b287f4"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-gitcommit"
-version = "0.3.3"
-source = "git+https://github.com/gbprod/tree-sitter-gitcommit#6bd81962d1abe309bf5dffde3315e4a5988f35fd"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-gleam"
-version = "0.34.0"
-source = "git+https://github.com/gleam-lang/tree-sitter-gleam?rev=58b7cac8fc14c92b0677c542610d8738c373fa81#58b7cac8fc14c92b0677c542610d8738c373fa81"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-glsl"
-version = "0.1.4"
-source = "git+https://github.com/theHamsta/tree-sitter-glsl?rev=2a56fb7bc8bb03a1892b4741279dd0a8758b7fb3#2a56fb7bc8bb03a1892b4741279dd0a8758b7fb3"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-go"
-version = "0.19.1"
-source = "git+https://github.com/tree-sitter/tree-sitter-go?rev=aeb2f33b366fd78d5789ff104956ce23508b85db#aeb2f33b366fd78d5789ff104956ce23508b85db"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-gomod"
-version = "1.0.2"
-source = "git+https://github.com/camdencheek/tree-sitter-go-mod#bbe2fe3be4b87e06a613e685250f473d2267f430"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-gowork"
-version = "0.0.1"
-source = "git+https://github.com/d1y/tree-sitter-go-work#a2a4b99b53b3740855ff33f0b54cab0bb4ce6f45"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-haskell"
-version = "0.14.0"
-source = "git+https://github.com/tree-sitter/tree-sitter-haskell?rev=8a99848fc734f9c4ea523b3f2a07df133cbbcec2#8a99848fc734f9c4ea523b3f2a07df133cbbcec2"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-hcl"
-version = "0.0.1"
-source = "git+https://github.com/MichaHoffmann/tree-sitter-hcl?rev=v1.1.0#636dbe70301ecbab8f353c8c78b3406fe4f185f5"
 dependencies = [
  "cc",
  "tree-sitter",
@@ -7810,83 +7563,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-nix"
-version = "0.0.1"
-source = "git+https://github.com/nix-community/tree-sitter-nix?rev=66e3e9ce9180ae08fc57372061006ef83f0abde7#66e3e9ce9180ae08fc57372061006ef83f0abde7"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-nu"
-version = "0.0.1"
-source = "git+https://github.com/nushell/tree-sitter-nu?rev=7dd29f9616822e5fc259f5b4ae6c4ded9a71a132#7dd29f9616822e5fc259f5b4ae6c4ded9a71a132"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-ocaml"
-version = "0.20.4"
-source = "git+https://github.com/tree-sitter/tree-sitter-ocaml?rev=4abfdc1c7af2c6c77a370aee974627be1c285b3b#4abfdc1c7af2c6c77a370aee974627be1c285b3b"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
 name = "tree-sitter-php"
 version = "0.21.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0db3788e709a5adfb583683a4b686a084e41a0f9e5a2fcb9a8e358f11481036a"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-prisma-io"
-version = "1.4.0"
-source = "git+https://github.com/victorhqc/tree-sitter-prisma#eca2596a355b1a9952b4f80f8f9caed300a272b5"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-proto"
-version = "0.0.2"
-source = "git+https://github.com/rewinfrey/tree-sitter-proto?rev=36d54f288aee112f13a67b550ad32634d0c2cb52#36d54f288aee112f13a67b550ad32634d0c2cb52"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-purescript"
-version = "0.1.0"
-source = "git+https://github.com/postsolar/tree-sitter-purescript?rev=v0.1.0#0554811a512b9cec08b5a83ce9096eb22da18213"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-python"
-version = "0.20.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e6c93b1b1fbd0d399db3445f51fd3058e43d0b4dcff62ddbdb46e66550978aa5"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-racket"
-version = "0.0.1"
-source = "git+https://github.com/zed-industries/tree-sitter-racket?rev=eb010cf2c674c6fd9a6316a84e28ef90190fe51a#eb010cf2c674c6fd9a6316a84e28ef90190fe51a"
 dependencies = [
  "cc",
  "tree-sitter",
@@ -7913,24 +7593,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-scheme"
-version = "0.2.0"
-source = "git+https://github.com/6cdh/tree-sitter-scheme?rev=af0fd1fa452cb2562dc7b5c8a8c55551c39273b9#af0fd1fa452cb2562dc7b5c8a8c55551c39273b9"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-svelte"
-version = "0.10.2"
-source = "git+https://github.com/Himujjal/tree-sitter-svelte?rev=bd60db7d3d06f89b6ec3b287c9a6e9190b5564bd#bd60db7d3d06f89b6ec3b287c9a6e9190b5564bd"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
 name = "tree-sitter-toml"
 version = "0.5.1"
 source = "git+https://github.com/tree-sitter/tree-sitter-toml?rev=342d9be207c2dba869b9967124c679b5e6fd0ebe#342d9be207c2dba869b9967124c679b5e6fd0ebe"
@@ -7943,42 +7605,6 @@ dependencies = [
 name = "tree-sitter-typescript"
 version = "0.20.2"
 source = "git+https://github.com/tree-sitter/tree-sitter-typescript?rev=5d20856f34315b068c41edaee2ac8a100081d259#5d20856f34315b068c41edaee2ac8a100081d259"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-uiua"
-version = "0.10.0"
-source = "git+https://github.com/shnarazk/tree-sitter-uiua?rev=21dc2db39494585bf29a3f86d5add6e9d11a22ba#21dc2db39494585bf29a3f86d5add6e9d11a22ba"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-vue"
-version = "0.0.1"
-source = "git+https://github.com/zed-industries/tree-sitter-vue?rev=6608d9d60c386f19d80af7d8132322fa11199c42#6608d9d60c386f19d80af7d8132322fa11199c42"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-yaml"
-version = "0.0.1"
-source = "git+https://github.com/zed-industries/tree-sitter-yaml?rev=f545a41f57502e1b5ddf2a6668896c1b0620f930#f545a41f57502e1b5ddf2a6668896c1b0620f930"
-dependencies = [
- "cc",
- "tree-sitter",
-]
-
-[[package]]
-name = "tree-sitter-zig"
-version = "0.0.1"
-source = "git+https://github.com/maxxnino/tree-sitter-zig?rev=0d08703e4c3f426ec61695d7617415fff97029bd#0d08703e4c3f426ec61695d7617415fff97029bd"
 dependencies = [
  "cc",
  "tree-sitter",
@@ -9748,7 +9374,6 @@ dependencies = [
  "itertools 0.11.0",
  "journal",
  "language",
- "languages",
  "log",
  "markdown_preview",
  "menu",
