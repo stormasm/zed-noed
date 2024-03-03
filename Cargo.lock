@@ -1042,28 +1042,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
-name = "channel"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "client",
- "clock",
- "collections",
- "futures",
- "gpui",
- "language",
- "log",
- "rand 0.8.5",
- "release_channel",
- "rpc",
- "settings",
- "sum_tree",
- "text",
- "time",
- "util",
-]
-
-[[package]]
 name = "chrono"
 version = "0.4.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4314,23 +4292,6 @@ checksum = "d273983c5a657a70a3e8f2a01329822f3b8c8172b73826411a55751e404a0a4a"
 dependencies = [
  "memchr",
  "minimal-lexical",
-]
-
-[[package]]
-name = "notifications"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "channel",
- "client",
- "collections",
- "db",
- "gpui",
- "rpc",
- "settings",
- "sum_tree",
- "time",
- "util",
 ]
 
 [[package]]
@@ -8918,7 +8879,6 @@ dependencies = [
  "assets",
  "audio",
  "backtrace",
- "channel",
  "chrono",
  "cli",
  "client",
@@ -8948,7 +8908,6 @@ dependencies = [
  "menu",
  "mimalloc",
  "node_runtime",
- "notifications",
  "outline",
  "parking_lot 0.11.2",
  "profiling",

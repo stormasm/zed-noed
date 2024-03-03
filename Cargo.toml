@@ -8,7 +8,7 @@ members = [
     #  "crates/auto_update",
     #  "crates/breadcrumbs",
     #  "crates/call",
-    "crates/channel",
+    #  "crates/channel",
     "crates/cli",
     "crates/client",
     "crates/clock",
@@ -49,7 +49,7 @@ members = [
     "crates/menu",
     "crates/multi_buffer",
     "crates/node_runtime",
-    "crates/notifications",
+    #  "crates/notifications",
     "crates/outline",
     "crates/picker",
     "crates/prettier",
@@ -106,7 +106,7 @@ audio = { path = "crates/audio" }
 #auto_update = { path = "crates/auto_update" }
 #breadcrumbs = { path = "crates/breadcrumbs" }
 #call = { path = "crates/call" }
-channel = { path = "crates/channel" }
+#channel = { path = "crates/channel" }
 cli = { path = "crates/cli" }
 client = { path = "crates/client" }
 clock = { path = "crates/clock" }
@@ -147,7 +147,7 @@ media = { path = "crates/media" }
 menu = { path = "crates/menu" }
 multi_buffer = { path = "crates/multi_buffer" }
 node_runtime = { path = "crates/node_runtime" }
-notifications = { path = "crates/notifications" }
+#notifications = { path = "crates/notifications" }
 outline = { path = "crates/outline" }
 picker = { path = "crates/picker" }
 plugin = { path = "crates/plugin" }
