@@ -27,7 +27,7 @@ use settings::{
     initial_local_settings_content, initial_tasks_content, watch_config_file, KeymapFile, Settings,
     SettingsStore, DEFAULT_KEYMAP_PATH,
 };
-use std::{borrow::Cow, ops::Deref, path::Path, sync::Arc};
+use std::{borrow::Cow, path::Path, sync::Arc};
 use task::{oneshot_source::OneshotSource, static_source::StaticSource};
 use terminal_view::terminal_panel::{self, TerminalPanel};
 use util::{
@@ -249,14 +249,16 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut AppContext) {
                 theme::adjust_font_size(cx, |size| *size -= px(1.0))
             })
             .register_action(move |_, _: &ResetBufferFontSize, cx| theme::reset_font_size(cx))
-            .register_action(|_, _: &install_cli::Install, cx| {
-                cx.spawn(|_, cx| async move {
-                    install_cli::install_cli(cx.deref())
-                        .await
-                        .context("error creating CLI symlink")
-                })
-                .detach_and_log_err(cx);
-            })
+            /*
+                        .register_action(|_, _: &install_cli::Install, cx| {
+                            cx.spawn(|_, cx| async move {
+                                install_cli::install_cli(cx.deref())
+                                    .await
+                                    .context("error creating CLI symlink")
+                            })
+                            .detach_and_log_err(cx);
+                        })
+            */
             .register_action(|workspace, _: &OpenLog, cx| {
                 open_log_file(workspace, cx);
             })

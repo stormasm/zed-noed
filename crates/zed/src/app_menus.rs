@@ -22,7 +22,7 @@ pub fn app_menus() -> Vec<Menu<'static>> {
                     ],
                 }),
                 MenuItem::action("Extensions", extensions_ui::Extensions),
-                MenuItem::action("Install CLI", install_cli::Install),
+                //MenuItem::action("Install CLI", install_cli::Install),
                 MenuItem::separator(),
                 MenuItem::action("Hide Zed", super::Hide),
                 MenuItem::action("Hide Others", super::HideOthers),

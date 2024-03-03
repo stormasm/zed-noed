@@ -120,20 +120,6 @@ impl Render for WelcomePage {
                                             })
                                             .ok();
                                     })),
-                            )
-                            .child(
-                                Button::new("install-cli", "Install the CLI")
-                                    .full_width()
-                                    .on_click(cx.listener(|this, _, cx| {
-                                        this.telemetry.report_app_event(
-                                            "welcome page: install cli".to_string(),
-                                        );
-                                        cx.app_mut()
-                                            .spawn(|cx| async move {
-                                                install_cli::install_cli(&cx).await
-                                            })
-                                            .detach_and_log_err(cx);
-                                    })),
                             ),
                     )
                     .child(
