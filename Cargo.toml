@@ -4,7 +4,7 @@ members = [
     #  "crates/ai",
     "crates/assets",
     #  "crates/assistant",
-    "crates/audio",
+    #  "crates/audio",
     #  "crates/auto_update",
     #  "crates/breadcrumbs",
     #  "crates/call",

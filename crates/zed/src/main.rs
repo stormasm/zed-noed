@@ -235,8 +235,8 @@ fn main() {
         });
         AppState::set_global(Arc::downgrade(&app_state), cx);
 
-        audio::init(Assets, cx);
-        //cauto_update::init(http.clone(), cx);
+        //audio::init(Assets, cx);
+        //auto_update::init(http.clone(), cx);
 
         workspace::init(app_state.clone(), cx);
         recent_projects::init(cx);
