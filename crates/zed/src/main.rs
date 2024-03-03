@@ -51,11 +51,11 @@ use util::{
     ResultExt,
 };
 use uuid::Uuid;
-use welcome::{show_welcome_view, BaseKeymap, FIRST_OPEN};
-use workspace::{AppState, WorkspaceStore};
+use welcome::BaseKeymap;
+use workspace::AppState;
 use zed::{
-    app_menus, build_window_options, ensure_only_instance, handle_cli_connection,
-    handle_keymap_file_changes, initialize_workspace, IsOnlyInstance, OpenListener, OpenRequest,
+    app_menus, build_window_options, ensure_only_instance,
+    handle_keymap_file_changes, initialize_workspace, IsOnlyInstance, OpenListener,
 };
 
 #[global_allocator]
@@ -103,7 +103,7 @@ fn main() {
         })
     };
 
-    let (listener, mut open_rx) = OpenListener::new();
+    let (listener, mut _open_rx) = OpenListener::new();
     let listener = Arc::new(listener);
     let open_listener = listener.clone();
     app.on_open_urls(move |urls, _| open_listener.open_urls(&urls));
@@ -146,7 +146,7 @@ fn main() {
 
         let client = client::Client::new(clock, http.clone(), cx);
         let mut languages = LanguageRegistry::new(login_shell_env_loaded);
-        let copilot_language_server_id = languages.next_language_server_id();
+        //let copilot_language_server_id = languages.next_language_server_id();
         languages.set_executor(cx.background_executor().clone());
         languages.set_language_server_download_dir(paths::LANGUAGES_DIR.clone());
         let languages = Arc::new(languages);
@@ -292,7 +292,7 @@ fn main() {
         }
 
         let mut triggered_authentication = false;
-
+/*
         fn open_paths_and_log_errs(
             paths: &[PathBuf],
             app_state: &Arc<AppState>,
@@ -310,7 +310,7 @@ fn main() {
             })
             .detach();
         }
-        /*
+
                 match open_rx.try_next() {
                     Ok(Some(OpenRequest::Paths { paths })) => {
                         open_paths_and_log_errs(&paths, &app_state, cx)
@@ -472,6 +472,7 @@ async fn installation_id() -> Result<(String, bool)> {
     Ok((installation_id, false))
 }
 
+/*
 async fn restore_or_create_workspace(app_state: &Arc<AppState>, cx: AsyncAppContext) {
     async_maybe!({
         if let Some(location) = workspace::last_opened_workspace_paths().await {
@@ -493,7 +494,7 @@ async fn restore_or_create_workspace(app_state: &Arc<AppState>, cx: AsyncAppCont
     .await
     .log_err();
 }
-
+*/
 fn init_paths() {
     std::fs::create_dir_all(&*util::paths::CONFIG_DIR).expect("could not create config path");
     std::fs::create_dir_all(&*util::paths::LANGUAGES_DIR).expect("could not create languages path");
