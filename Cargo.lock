@@ -51,7 +51,7 @@ dependencies = [
  "anyhow",
  "async-trait",
  "bincode",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "isahc",
  "language",
@@ -324,19 +324,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "async-compat"
-version = "0.2.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f68a707c1feb095d8c07f8a65b9f506b117d30af431cab89374357de7c11461b"
-dependencies = [
- "futures-core",
- "futures-io",
- "once_cell",
- "pin-project-lite",
- "tokio",
-]
-
-[[package]]
 name = "async-compression"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -499,7 +486,7 @@ name = "async-pipe"
 version = "0.1.3"
 source = "git+https://github.com/zed-industries/async-pipe-rs?rev=82d00a04211cf4e1236029aa03e6b6ce2a74c553#82d00a04211cf4e1236029aa03e6b6ce2a74c553"
 dependencies = [
- "futures 0.3.30",
+ "futures",
  "log",
 ]
 
@@ -919,16 +906,6 @@ checksum = "1fd0f2584146f6f2ef48085050886acf353beff7305ebd1ae69500e27c67f64b"
 
 [[package]]
 name = "bytes"
-version = "0.4.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "206fdffcfa2df7cbe15601ef46c813fce0965eb3286db6b56c583b814b51c81c"
-dependencies = [
- "byteorder",
- "iovec",
-]
-
-[[package]]
-name = "bytes"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2bd12c1caf447e69cd4528f47f94d203fd2582878ecb9e9465484c4148a8223"
@@ -1105,7 +1082,7 @@ dependencies = [
  "client",
  "clock",
  "collections",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "language",
  "log",
@@ -1255,7 +1232,7 @@ dependencies = [
  "clock",
  "collections",
  "feature_flags",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "lazy_static",
  "log",
@@ -1363,7 +1340,7 @@ version = "4.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "35ed6e9d84f0b51a7f52daf1c7d71dd136fd7a3f41a8462b8cdb8c78d920fad4"
 dependencies = [
- "bytes 1.5.0",
+ "bytes",
  "memchr",
 ]
 
@@ -1921,7 +1898,7 @@ dependencies = [
  "client",
  "collections",
  "editor",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "language",
  "log",
@@ -2083,7 +2060,7 @@ dependencies = [
  "ctor",
  "db",
  "env_logger",
- "futures 0.3.30",
+ "futures",
  "fuzzy",
  "git",
  "gpui",
@@ -2289,7 +2266,7 @@ dependencies = [
  "async-trait",
  "collections",
  "fs",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "language",
  "log",
@@ -2398,7 +2375,7 @@ dependencies = [
  "client",
  "db",
  "editor",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "human_bytes",
  "isahc",
@@ -2646,7 +2623,7 @@ dependencies = [
  "async-trait",
  "collections",
  "fsevent",
- "futures 0.3.30",
+ "futures",
  "git2",
  "gpui",
  "lazy_static",
@@ -2731,12 +2708,6 @@ dependencies = [
  "mac",
  "new_debug_unreachable",
 ]
-
-[[package]]
-name = "futures"
-version = "0.1.31"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3a471a38ef8ed83cd6e40aa59c1ffe17db6855c18e3604d9c4ed8c08ebc28678"
 
 [[package]]
 name = "futures"
@@ -2843,7 +2814,6 @@ version = "0.3.30"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d6401deb83407ab3da39eba7e33987a73c3df0c82b4bb5813ee871c19c41d48"
 dependencies = [
- "futures 0.1.31",
  "futures-channel",
  "futures-core",
  "futures-io",
@@ -2854,7 +2824,6 @@ dependencies = [
  "pin-project-lite",
  "pin-utils",
  "slab",
- "tokio-io",
 ]
 
 [[package]]
@@ -3095,7 +3064,7 @@ dependencies = [
  "flume",
  "font-kit",
  "foreign-types 0.5.0",
- "futures 0.3.30",
+ "futures",
  "gpui_macros",
  "image",
  "itertools 0.11.0",
@@ -3267,7 +3236,7 @@ version = "0.2.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8947b1a6fad4393052c7ba1f4cd97bed3e953a95c79c92ad9b051a04611d9fbb"
 dependencies = [
- "bytes 1.5.0",
+ "bytes",
  "fnv",
  "itoa",
 ]
@@ -3727,7 +3696,7 @@ dependencies = [
  "collections",
  "ctor",
  "env_logger",
- "futures 0.3.30",
+ "futures",
  "fuzzy",
  "git",
  "globset",
@@ -3955,7 +3924,7 @@ dependencies = [
  "collections",
  "ctor",
  "env_logger",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "log",
  "lsp-types",
@@ -4249,7 +4218,7 @@ dependencies = [
  "anyhow",
  "clock",
  "collections",
- "futures 0.3.30",
+ "futures",
  "git",
  "gpui",
  "language",
@@ -4417,7 +4386,7 @@ dependencies = [
  "async-compression",
  "async-tar",
  "async-trait",
- "futures 0.3.30",
+ "futures",
  "log",
  "serde",
  "serde_json",
@@ -4654,22 +4623,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "nvim-rs"
-version = "0.8.0-pre"
-source = "git+https://github.com/KillTheMule/nvim-rs?branch=master#69500bae73b8b3f02a05b7bee621a0d0e633da6c"
-dependencies = [
- "async-trait",
- "futures 0.3.30",
- "log",
- "parity-tokio-ipc",
- "rmp",
- "rmpv",
- "tokio",
- "tokio-util",
- "winapi 0.3.9",
-]
-
-[[package]]
 name = "objc"
 version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4853,20 +4806,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn 2.0.52",
-]
-
-[[package]]
-name = "parity-tokio-ipc"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9981e32fb75e004cc148f5fb70342f393830e0a4aa62e3cc93b50976218d42b6"
-dependencies = [
- "futures 0.3.30",
- "libc",
- "log",
- "rand 0.7.3",
- "tokio",
- "winapi 0.3.9",
 ]
 
 [[package]]
@@ -5136,7 +5075,7 @@ checksum = "af3fb618632874fb76937c2361a7f22afd393c982a2165595407edc75b06d3c1"
 dependencies = [
  "atomic",
  "crossbeam-queue",
- "futures 0.3.30",
+ "futures",
  "log",
  "parking_lot 0.12.1",
  "pin-project",
@@ -5280,7 +5219,7 @@ dependencies = [
  "collections",
  "env_logger",
  "fs",
- "futures 0.3.30",
+ "futures",
  "fuzzy",
  "git2",
  "globset",
@@ -5322,7 +5261,7 @@ dependencies = [
  "clock",
  "collections",
  "fs",
- "futures 0.3.30",
+ "futures",
  "fuzzy",
  "git",
  "git2",
@@ -5380,7 +5319,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "editor",
- "futures 0.3.30",
+ "futures",
  "fuzzy",
  "gpui",
  "language",
@@ -5402,7 +5341,7 @@ version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "de5e2533f59d08fcf364fd374ebda0692a70bd6d7e66ef97f306f45c6c5d8020"
 dependencies = [
- "bytes 1.5.0",
+ "bytes",
  "prost-derive 0.8.0",
 ]
 
@@ -5412,7 +5351,7 @@ version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "444879275cb4fd84958b1a1d5420d15e6fcf7c235fe47f053c9c2a80aceb6001"
 dependencies = [
- "bytes 1.5.0",
+ "bytes",
  "prost-derive 0.9.0",
 ]
 
@@ -5422,7 +5361,7 @@ version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "62941722fb675d463659e49c4f3fe1fe792ff24fe5bbaa9c08cd3b98a1c354f5"
 dependencies = [
- "bytes 1.5.0",
+ "bytes",
  "heck 0.3.3",
  "itertools 0.10.5",
  "lazy_static",
@@ -5468,7 +5407,7 @@ version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "534b7a0e836e3c482d2693070f982e39e7611da9695d4d1f5a4b186b51faef0a"
 dependencies = [
- "bytes 1.5.0",
+ "bytes",
  "prost 0.9.0",
 ]
 
@@ -5796,7 +5735,7 @@ dependencies = [
 name = "rich_text"
 version = "0.1.0"
 dependencies = [
- "futures 0.3.30",
+ "futures",
  "gpui",
  "language",
  "linkify",
@@ -5804,27 +5743,6 @@ dependencies = [
  "theme",
  "ui",
  "util",
-]
-
-[[package]]
-name = "rmp"
-version = "0.8.12"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7f9860a6cc38ed1da53456442089b4dfa35e7cedaa326df63017af88385e6b20"
-dependencies = [
- "byteorder",
- "num-traits",
- "paste",
-]
-
-[[package]]
-name = "rmpv"
-version = "1.0.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2e0e0214a4a2b444ecce41a4025792fc31f77c7bb89c46d253953ea8c65701ec"
-dependencies = [
- "num-traits",
- "rmp",
 ]
 
 [[package]]
@@ -5875,7 +5793,7 @@ dependencies = [
  "base64 0.13.1",
  "collections",
  "env_logger",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "parking_lot 0.11.2",
  "prost 0.8.0",
@@ -6156,7 +6074,7 @@ dependencies = [
  "client",
  "collections",
  "editor",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "language",
  "menu",
@@ -6212,7 +6130,7 @@ dependencies = [
  "collections",
  "ctor",
  "env_logger",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "language",
  "lazy_static",
@@ -6352,7 +6270,7 @@ dependencies = [
  "anyhow",
  "collections",
  "fs",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "indoc",
  "lazy_static",
@@ -6622,7 +6540,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "collections",
- "futures 0.3.30",
+ "futures",
  "indoc",
  "lazy_static",
  "libsqlite3-sys",
@@ -6958,7 +6876,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "collections",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "schemars",
  "serde",
@@ -7034,7 +6952,7 @@ dependencies = [
  "anyhow",
  "collections",
  "dirs 4.0.0",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "libc",
  "procinfo",
@@ -7061,7 +6979,7 @@ dependencies = [
  "db",
  "dirs 4.0.0",
  "editor",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "itertools 0.11.0",
  "language",
@@ -7118,7 +7036,7 @@ dependencies = [
  "color",
  "derive_more",
  "fs",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "indexmap 1.9.3",
  "palette",
@@ -7322,52 +7240,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "61285f6515fa018fb2d1e46eb21223fff441ee8db5d0f1435e8ab4f5cdb80931"
 dependencies = [
  "backtrace",
- "bytes 1.5.0",
+ "bytes",
  "libc",
  "mio 0.8.11",
  "num_cpus",
- "parking_lot 0.12.1",
  "pin-project-lite",
- "signal-hook-registry",
  "socket2 0.5.6",
- "tokio-macros",
  "windows-sys 0.48.0",
-]
-
-[[package]]
-name = "tokio-io"
-version = "0.1.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57fc868aae093479e3131e3d165c93b1c7474109d13c90ec0dda2a1bbfff0674"
-dependencies = [
- "bytes 0.4.12",
- "futures 0.1.31",
- "log",
-]
-
-[[package]]
-name = "tokio-macros"
-version = "2.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b8a1e28f2deaa14e508979454cb3a223b10b938b45af148bc0986de36f1923b"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.52",
-]
-
-[[package]]
-name = "tokio-util"
-version = "0.7.10"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5419f34732d9eb6ee4c3578b7989078579b7f039cbbb9ca2c4da015749371e15"
-dependencies = [
- "bytes 1.5.0",
- "futures-core",
- "futures-io",
- "futures-sink",
- "pin-project-lite",
- "tokio",
 ]
 
 [[package]]
@@ -7642,7 +7521,7 @@ checksum = "6ad3713a14ae247f22a728a0456a545df14acf3867f905adff84be99e23b3ad1"
 dependencies = [
  "base64 0.13.1",
  "byteorder",
- "bytes 1.5.0",
+ "bytes",
  "http",
  "httparse",
  "log",
@@ -7853,7 +7732,7 @@ dependencies = [
  "backtrace",
  "collections",
  "dirs 3.0.2",
- "futures 0.3.30",
+ "futures",
  "git2",
  "globset",
  "isahc",
@@ -7942,40 +7821,6 @@ name = "version_check"
 version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
-
-[[package]]
-name = "vim"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "async-compat",
- "async-trait",
- "collections",
- "command_palette",
- "command_palette_hooks",
- "editor",
- "futures 0.3.30",
- "gpui",
- "indoc",
- "language",
- "log",
- "lsp",
- "nvim-rs",
- "parking_lot 0.11.2",
- "regex",
- "release_channel",
- "schemars",
- "search",
- "serde",
- "serde_derive",
- "serde_json",
- "settings",
- "tokio",
- "ui",
- "util",
- "workspace",
- "zed_actions",
-]
 
 [[package]]
 name = "vscode_theme"
@@ -8471,14 +8316,14 @@ dependencies = [
  "anyhow",
  "async-trait",
  "bitflags 2.4.2",
- "bytes 1.5.0",
+ "bytes",
  "cap-fs-ext",
  "cap-net-ext",
  "cap-rand",
  "cap-std",
  "cap-time-ext",
  "fs-set-times",
- "futures 0.3.30",
+ "futures",
  "io-extras",
  "io-lifetimes 2.0.3",
  "log",
@@ -8656,7 +8501,6 @@ dependencies = [
  "theme_selector",
  "ui",
  "util",
- "vim",
  "workspace",
 ]
 
@@ -9157,7 +9001,7 @@ dependencies = [
  "derive_more",
  "env_logger",
  "fs",
- "futures 0.3.30",
+ "futures",
  "gpui",
  "itertools 0.11.0",
  "language",
@@ -9366,7 +9210,7 @@ dependencies = [
  "file_finder",
  "fs",
  "fsevent",
- "futures 0.3.30",
+ "futures",
  "go_to_line",
  "gpui",
  "install_cli",
@@ -9405,7 +9249,6 @@ dependencies = [
  "urlencoding",
  "util",
  "uuid",
- "vim",
  "welcome",
  "workspace",
  "zed_actions",
