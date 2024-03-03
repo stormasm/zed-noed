@@ -1,7 +1,7 @@
 [workspace]
 members = [
     #  "crates/activity_indicator",
-    "crates/ai",
+    #  "crates/ai",
     "crates/assets",
     #  "crates/assistant",
     "crates/audio",
@@ -99,7 +99,7 @@ resolver = "2"
 
 [workspace.dependencies]
 #activity_indicator = { path = "crates/activity_indicator" }
-ai = { path = "crates/ai" }
+#ai = { path = "crates/ai" }
 assets = { path = "crates/assets" }
 #assistant = { path = "crates/assistant" }
 audio = { path = "crates/audio" }
@@ -166,7 +166,7 @@ rpc = { path = "crates/rpc" }
 task = { path = "crates/task" }
 tasks_ui = { path = "crates/tasks_ui" }
 search = { path = "crates/search" }
-semantic_index = { path = "crates/semantic_index" }
+#semantic_index = { path = "crates/semantic_index" }
 settings = { path = "crates/settings" }
 snippet = { path = "crates/snippet" }
 sqlez = { path = "crates/sqlez" }

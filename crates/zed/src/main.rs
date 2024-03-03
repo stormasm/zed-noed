@@ -249,7 +249,7 @@ fn main() {
         tasks_ui::init(cx);
         channel::init(&client, user_store.clone(), cx);
         search::init(cx);
-        semantic_index::init(fs.clone(), http.clone(), languages.clone(), cx);
+        //semantic_index::init(fs.clone(), http.clone(), languages.clone(), cx);
         //vim::init(cx);
         terminal_view::init(cx);
 

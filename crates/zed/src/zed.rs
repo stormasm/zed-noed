@@ -22,7 +22,7 @@ use project_panel::ProjectPanel;
 //use quick_action_bar::QuickActionBar;
 use release_channel::{AppCommitSha, ReleaseChannel};
 use rope::Rope;
-use search::project_search::ProjectSearchBar;
+//use search::project_search::ProjectSearchBar;
 use settings::{
     initial_local_settings_content, initial_tasks_content, watch_config_file, KeymapFile, Settings,
     SettingsStore, DEFAULT_KEYMAP_PATH,
@@ -407,8 +407,8 @@ fn initialize_pane(_workspace: &mut Workspace, pane: &View<Pane>, cx: &mut ViewC
             */
             let diagnostic_editor_controls = cx.new_view(|_| diagnostics::ToolbarControls::new());
             toolbar.add_item(diagnostic_editor_controls, cx);
-            let project_search_bar = cx.new_view(|_| ProjectSearchBar::new());
-            toolbar.add_item(project_search_bar, cx);
+            //let project_search_bar = cx.new_view(|_| ProjectSearchBar::new());
+            //toolbar.add_item(project_search_bar, cx);
             /*
             let lsp_log_item = cx.new_view(|_| language_tools::LspLogToolbarItemView::new());
             toolbar.add_item(lsp_log_item, cx);

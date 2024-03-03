@@ -3,20 +3,20 @@ pub use buffer_search::BufferSearchBar;
 use gpui::{actions, Action, AppContext, IntoElement};
 pub use mode::SearchMode;
 use project::search::SearchQuery;
-pub use project_search::ProjectSearchView;
+//pub use project_search::ProjectSearchView;
 use ui::{prelude::*, Tooltip};
 use ui::{ButtonStyle, IconButton};
 
 pub mod buffer_search;
 mod history;
 mod mode;
-pub mod project_search;
+//pub mod project_search;
 pub(crate) mod search_bar;
 
 pub fn init(cx: &mut AppContext) {
     menu::init();
     buffer_search::init(cx);
-    project_search::init(cx);
+    //project_search::init(cx);
 }
 
 actions!(

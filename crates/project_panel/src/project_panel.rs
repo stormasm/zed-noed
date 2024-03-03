@@ -987,24 +987,24 @@ impl ProjectPanel {
             )
         }
     }
-
-    pub fn new_search_in_directory(
-        &mut self,
-        _: &NewSearchInDirectory,
-        cx: &mut ViewContext<Self>,
-    ) {
-        if let Some((_, entry)) = self.selected_entry(cx) {
-            if entry.is_dir() {
-                let entry = entry.clone();
-                self.workspace
-                    .update(cx, |workspace, cx| {
-                        search::ProjectSearchView::new_search_in_directory(workspace, &entry, cx);
-                    })
-                    .ok();
+    /*
+        pub fn new_search_in_directory(
+            &mut self,
+            _: &NewSearchInDirectory,
+            cx: &mut ViewContext<Self>,
+        ) {
+            if let Some((_, entry)) = self.selected_entry(cx) {
+                if entry.is_dir() {
+                    let entry = entry.clone();
+                    self.workspace
+                        .update(cx, |workspace, cx| {
+                            search::ProjectSearchView::new_search_in_directory(workspace, &entry, cx);
+                        })
+                        .ok();
+                }
             }
         }
-    }
-
+    */
     fn move_entry(
         &mut self,
         entry_to_move: ProjectEntryId,
@@ -1523,7 +1523,7 @@ impl Render for ProjectPanel {
                 .on_action(cx.listener(Self::cancel))
                 .on_action(cx.listener(Self::copy_path))
                 .on_action(cx.listener(Self::copy_relative_path))
-                .on_action(cx.listener(Self::new_search_in_directory))
+                //.on_action(cx.listener(Self::new_search_in_directory))
                 .when(!project.is_read_only(), |el| {
                     el.on_action(cx.listener(Self::new_file))
                         .on_action(cx.listener(Self::new_directory))
