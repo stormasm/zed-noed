@@ -36,7 +36,7 @@ use std::{
     fs::OpenOptions,
     io::{IsTerminal, Write},
     panic,
-    path::{Path, PathBuf},
+    path::Path,
     sync::{
         atomic::{AtomicU32, Ordering},
         Arc,
@@ -45,7 +45,6 @@ use std::{
 };
 use theme::{ActiveTheme, SystemAppearance, ThemeRegistry, ThemeSettings};
 use util::{
-    async_maybe,
     http::{HttpClient, HttpClientWithUrl},
     paths::{self, CRASHES_DIR, CRASHES_RETIRED_DIR},
     ResultExt,
@@ -54,8 +53,8 @@ use uuid::Uuid;
 use welcome::BaseKeymap;
 use workspace::AppState;
 use zed::{
-    app_menus, build_window_options, ensure_only_instance,
-    handle_keymap_file_changes, initialize_workspace, IsOnlyInstance, OpenListener,
+    app_menus, build_window_options, ensure_only_instance, handle_keymap_file_changes,
+    initialize_workspace, IsOnlyInstance, OpenListener,
 };
 
 #[global_allocator]
@@ -291,8 +290,8 @@ fn main() {
             }
         }
 
-        let mut triggered_authentication = false;
-/*
+        let triggered_authentication = false;
+        /*
         fn open_paths_and_log_errs(
             paths: &[PathBuf],
             app_state: &Arc<AppState>,
