@@ -6,7 +6,7 @@ use backtrace::Backtrace;
 use chrono::Utc;
 use cli::FORCE_CLI_MODE_ENV_VAR_NAME;
 use client::{Client, UserStore};
-use collab_ui::channel_view::ChannelView;
+//use collab_ui::channel_view::ChannelView;
 use db::kvp::KEY_VALUE_STORE;
 use editor::Editor;
 use env_logger::Builder;
@@ -310,6 +310,7 @@ fn main() {
             .detach();
         }
 
+
         match open_rx.try_next() {
             Ok(Some(OpenRequest::Paths { paths })) => {
                 open_paths_and_log_errs(&paths, &app_state, cx)
@@ -355,6 +356,9 @@ fn main() {
                 })
                 .detach_and_log_err(cx);
             }
+
+
+
             Ok(None) | Err(_) => cx
                 .spawn({
                     let app_state = app_state.clone();
