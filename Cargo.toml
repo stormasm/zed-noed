@@ -86,7 +86,7 @@ members = [
     "crates/time_format",
     "crates/ui",
     "crates/util",
-    "crates/vcs_menu",
+    #  "crates/vcs_menu",
     #  "crates/vim",
     "crates/welcome",
     "crates/workspace",
@@ -184,7 +184,7 @@ telemetry_events = { path = "crates/telemetry_events" }
 time_format = { path = "crates/time_format" }
 ui = { path = "crates/ui" }
 util = { path = "crates/util" }
-vcs_menu = { path = "crates/vcs_menu" }
+#vcs_menu = { path = "crates/vcs_menu" }
 vim = { path = "crates/vim" }
 welcome = { path = "crates/welcome" }
 workspace = { path = "crates/workspace" }
