@@ -57,8 +57,8 @@ fn trim_consecutive_whitespaces(input: &str) -> String {
 
 impl CommandPalette {
     fn register(workspace: &mut Workspace, _: &mut ViewContext<Workspace>) {
-        workspace.register_action(|workspace, _: &Toggle, cx| {
-            let Some(previous_focus_handle) = cx.focused() else {
+        workspace.register_action(|_workspace, _: &Toggle, cx| {
+            let Some(_previous_focus_handle) = cx.focused() else {
                 return;
             };
             /*
@@ -70,6 +70,7 @@ impl CommandPalette {
         });
     }
 
+    #[allow(dead_code)]
     fn new(
         previous_focus_handle: FocusHandle,
         //telemetry: Arc<Telemetry>,
@@ -412,7 +413,7 @@ impl PickerDelegate for CommandPaletteDelegate {
         )
     }
 }
-
+#[allow(dead_code)]
 fn humanize_action_name(name: &str) -> String {
     let capacity = name.len() + name.chars().filter(|c| c.is_uppercase()).count();
     let mut result = String::with_capacity(capacity);

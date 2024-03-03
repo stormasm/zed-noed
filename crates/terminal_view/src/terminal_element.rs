@@ -141,7 +141,7 @@ impl LayoutRect {
 /// We need to keep a reference to the view for mouse events, do we need it for any other terminal stuff, or can we move that to connection?
 pub struct TerminalElement {
     terminal: Model<Terminal>,
-    workspace: WeakView<Workspace>,
+    //    workspace: WeakView<Workspace>,
     focus: FocusHandle,
     focused: bool,
     cursor_visible: bool,
@@ -160,7 +160,7 @@ impl StatefulInteractiveElement for TerminalElement {}
 impl TerminalElement {
     pub fn new(
         terminal: Model<Terminal>,
-        workspace: WeakView<Workspace>,
+        _workspace: WeakView<Workspace>,
         focus: FocusHandle,
         focused: bool,
         cursor_visible: bool,
@@ -168,7 +168,7 @@ impl TerminalElement {
     ) -> TerminalElement {
         TerminalElement {
             terminal,
-            workspace,
+            //workspace,
             focused,
             focus: focus.clone(),
             cursor_visible,
@@ -788,7 +788,7 @@ impl Element for TerminalElement {
                 .cursor
                 .as_ref()
                 .map(|cursor| cursor.bounding_rect(origin)),
-            workspace: self.workspace.clone(),
+            //workspace: self.workspace.clone(),
         };
 
         self.register_mouse_listeners(origin, layout.mode, bounds, cx);
@@ -872,7 +872,7 @@ impl IntoElement for TerminalElement {
 
 struct TerminalInputHandler {
     terminal: Model<Terminal>,
-    workspace: WeakView<Workspace>,
+    //workspace: WeakView<Workspace>,
     cursor_bounds: Option<Bounds<Pixels>>,
 }
 

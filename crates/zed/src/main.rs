@@ -48,7 +48,7 @@ use util::{
     ResultExt,
 };
 use uuid::Uuid;
-use welcome::BaseKeymap;
+//use welcome::BaseKeymap;
 use workspace::AppState;
 use zed::{
     app_menus, build_window_options, ensure_only_instance, handle_keymap_file_changes,
@@ -72,7 +72,7 @@ fn main() {
     log::info!("========== starting zed ==========");
     let app = App::new().with_assets(Assets);
 
-    let (installation_id, existing_installation_id_found) = app
+    let (installation_id, _existing_installation_id_found) = app
         .background_executor()
         .block(installation_id())
         .ok()

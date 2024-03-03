@@ -9079,7 +9079,9 @@ impl Editor {
                     }
                 }
 
-                let Some(project) = &self.project else { return };
+                let Some(_project) = &self.project else {
+                    return;
+                };
                 //let telemetry = project.read(cx).client().telemetry().clone();
                 //telemetry.log_edit_event("editor");
             }
@@ -9325,11 +9327,13 @@ impl Editor {
     #[cfg(not(any(test, feature = "test-support")))]
     fn report_editor_event(
         &self,
-        operation: &'static str,
+        _operation: &'static str,
         file_extension: Option<String>,
         cx: &AppContext,
     ) {
-        let Some(project) = &self.project else { return };
+        let Some(_project) = &self.project else {
+            return;
+        };
 
         // If None, we are in a file without an extension
         let file = self
@@ -9337,19 +9341,19 @@ impl Editor {
             .read(cx)
             .as_singleton()
             .and_then(|b| b.read(cx).file());
-        let file_extension = file_extension.or(file
+        let _file_extension = file_extension.or(file
             .as_ref()
             .and_then(|file| Path::new(file.file_name(cx)).extension())
             .and_then(|e| e.to_str())
             .map(|a| a.to_string()));
 
-        let vim_mode = cx
+        let _vim_mode = cx
             .global::<SettingsStore>()
             .raw_user_settings()
             .get("vim_mode")
             == Some(&serde_json::Value::Bool(true));
-        let copilot_enabled = all_language_settings(file, cx).copilot_enabled(None, None);
-        let copilot_enabled_for_language = self
+        let _copilot_enabled = all_language_settings(file, cx).copilot_enabled(None, None);
+        let _copilot_enabled_for_language = self
             .buffer
             .read(cx)
             .settings_at(0, cx)

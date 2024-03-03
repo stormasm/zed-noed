@@ -50,7 +50,7 @@ pub struct ExtensionsPage {
 }
 
 impl ExtensionsPage {
-    pub fn new(workspace: &Workspace, cx: &mut ViewContext<Workspace>) -> View<Self> {
+    pub fn new(_workspace: &Workspace, cx: &mut ViewContext<Workspace>) -> View<Self> {
         cx.new_view(|cx: &mut ViewContext<Self>| {
             let store = ExtensionStore::global(cx);
             let subscription = cx.observe(&store, |_, _, cx| cx.notify());

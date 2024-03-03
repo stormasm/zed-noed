@@ -10,7 +10,7 @@ use gpui::{
 };
 use settings::{Settings, SettingsStore};
 use std::sync::Arc;
-use ui::{prelude::*, CheckboxWithLabel};
+use ui::prelude::*;
 //use vim::VimModeSetting;
 use workspace::{
     dock::DockPosition,
@@ -147,7 +147,7 @@ impl WelcomePage {
 
         this
     }
-
+    #[allow(dead_code)]
     fn update_settings<T: Settings>(
         &mut self,
         selection: &Selection,
