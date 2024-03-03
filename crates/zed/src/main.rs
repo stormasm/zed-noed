@@ -14,8 +14,8 @@ use fs::RealFs;
 #[cfg(target_os = "macos")]
 use fsevent::StreamFlags;
 use futures::StreamExt;
-use gpui::{App, AppContext, AsyncAppContext, Context, SemanticVersion, Task};
-use isahc::{prelude::Configurable, Request};
+use gpui::{App, AppContext, Context, SemanticVersion, Task};
+//use isahc::{prelude::Configurable, Request};
 use language::LanguageRegistry;
 use log::LevelFilter;
 
@@ -23,7 +23,7 @@ use assets::Assets;
 use mimalloc::MiMalloc;
 use node_runtime::RealNodeRuntime;
 use parking_lot::Mutex;
-use release_channel::{parse_zed_link, AppCommitSha, ReleaseChannel, RELEASE_CHANNEL};
+use release_channel::{AppCommitSha, ReleaseChannel, RELEASE_CHANNEL};
 use serde::{Deserialize, Serialize};
 use settings::{
     default_settings, handle_settings_file_changes, watch_config_file, Settings, SettingsStore,
@@ -32,11 +32,9 @@ use simplelog::ConfigBuilder;
 use smol::process::Command;
 use std::{
     env,
-    ffi::OsStr,
     fs::OpenOptions,
     io::{IsTerminal, Write},
     panic,
-    path::Path,
     sync::{
         atomic::{AtomicU32, Ordering},
         Arc,
@@ -45,8 +43,8 @@ use std::{
 };
 use theme::{ActiveTheme, SystemAppearance, ThemeRegistry, ThemeSettings};
 use util::{
-    http::{HttpClient, HttpClientWithUrl},
-    paths::{self, CRASHES_DIR, CRASHES_RETIRED_DIR},
+    http::HttpClientWithUrl,
+    paths::{self},
     ResultExt,
 };
 use uuid::Uuid;
@@ -716,7 +714,7 @@ fn init_panic_hook(app: &App, installation_id: Option<String>, session_id: Strin
         std::process::abort();
     }));
 }
-
+/*
 fn upload_panics_and_crashes(http: Arc<HttpClientWithUrl>, cx: &mut AppContext) {
     let telemetry_settings = *client::TelemetrySettings::get_global(cx);
     cx.background_executor()
@@ -731,8 +729,9 @@ fn upload_panics_and_crashes(http: Arc<HttpClientWithUrl>, cx: &mut AppContext) 
         })
         .detach()
 }
-
+*/
 /// Uploads panics via `zed.dev`.
+/*
 async fn upload_previous_panics(
     http: Arc<HttpClientWithUrl>,
     telemetry_settings: client::TelemetrySettings,
@@ -800,11 +799,13 @@ async fn upload_previous_panics(
     }
     Ok::<_, anyhow::Error>(most_recent_panic)
 }
-
-static LAST_CRASH_UPLOADED: &'static str = "LAST_CRASH_UPLOADED";
+*/
+//static LAST_CRASH_UPLOADED: &'static str = "LAST_CRASH_UPLOADED";
 
 /// upload crashes from apple's diagnostic reports to our server.
 /// (only if telemetry is enabled)
+///
+/*
 async fn upload_previous_crashes(
     http: Arc<HttpClientWithUrl>,
     most_recent_panic: Option<(i64, String)>,
@@ -872,7 +873,7 @@ async fn upload_previous_crashes(
 
     Ok(())
 }
-
+*/
 async fn load_login_shell_environment() -> Result<()> {
     let marker = "ZED_LOGIN_SHELL_START";
     let shell = env::var("SHELL").context(
@@ -928,7 +929,6 @@ async fn load_login_shell_environment() -> Result<()> {
 
     Ok(())
 }
-
 
 fn stdout_is_a_pty() -> bool {
     std::env::var(FORCE_CLI_MODE_ENV_VAR_NAME).ok().is_none() && std::io::stdout().is_terminal()
